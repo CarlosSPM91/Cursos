@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <title>Bootstrap</title>
+</head>
+
+<body>
+    <h1>Prueba Bootstrap</h1>
+    <h2>vamos a utilizar esta herramienta para diseñar</h2>
+
+    <div class="container-fluid">
+        <div class="row">
+            <header class="col-12 bg-primary text-white p-2">
+                <h1>Aprendiendo bootstrap aqui</h1>
+            </header>
+            <nav id="menu" class="col-12 bg-secondary text-white">
+                <ul class="row w-50">
+                    <li class="col">Inicio</li>
+                    <li class="col">plantilla 1</li>
+                    <li class="col">plantilla 2</li>
+                    <li class="col">plantilla 3</li>
+                    <li class="col">Contacto</li>
+                </ul>
+            </nav>
+
+
+            <section class="col-12">
+                <div class="row">
+                    <section class="col-9 border">
+                        <h2>Cajas</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="col bg-primary m-2">
+                                caja 1
+                            </div>
+                            <div class="col bg-warning m-2">
+                                caja 2
+                            </div>
+                            <div class="col bg-danger m-2">
+                                caja 3
+                            </div>
+                        </div>
+                    </section>
+                    <aside class="col-3 border">
+                        <h2>barra lateral</h2>
+                        <div class="lateral row bg-light">
+                            <div class="late col-4 bg-primary">
+                                numero1
+                            </div>
+                            <div class="late col-4  bg-warning">
+                                numero2
+                            </div>
+                            <div class="late col-4  bg-danger">
+                                numero3
+                            </div>
+                            <div class="late col-4  bg-success order-3">
+                                numero4
+                            </div>
+                            <div class="late col-4  bg-body-secondary order-1">
+                                numero5
+                            </div>
+                            <div class="late col-4  bg-warning-subtle order-2">
+                                numero6
+                            </div>
+                        </div>
+                    </aside>
+                    <div class="row">
+                        <div class="item col col-lg col-md-12 col-sm-12 bg-primary m-2">
+                            item 1
+                        </div>
+                        <div class="item col col-lg col-md-12 col-sm-12 bg-warning m-2">
+                            item 2
+                        </div>
+                        <div class="item col col-lg col-md-12 col-sm-12 bg-danger m-2">
+                            item 3
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </section>
+            <!-- justify-content para justificar el contenido segun varios parametros predefinidos -->
+            <div class="row mt-5 justify-content-around">
+                <div class="item col-3 bg-primary m-2">
+                    productoA
+                </div>
+                <div class="item col-3 bg-warning m-2">
+                    productoB
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="item col-3 bg-primary">
+                    elemento1
+                </div>
+                <div class="item col-3 bg-warning">
+                    elemento2
+                </div>
+                <div class="item col-3 bg-danger">
+                    elemento3
+                </div>
+                <!-- Ofsset da un espacio -->
+                <div class="item col-2 bg-success offset-1">
+                    elemento4
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

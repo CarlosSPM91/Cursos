@@ -1,0 +1,159 @@
+* {
+    /*Para quitar todos los margenes y resetearlo */
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    /* Se utiliza para definir la letra y si no esta que se use otra*/
+}
+
+
+#general {
+    width: 1200px;
+    margin: 0px auto;
+    border: 1px solid #ccc;
+}
+
+#header {
+    width: 100%;
+    height: 100px;
+    background: rgb(0, 89, 255);
+    text-align: center;
+    line-height: 90px;
+    /*separar de la parte de arriba. */
+}
+
+#menu {
+    background: #eeeeee;
+}
+
+#menu ul li {
+    /*display: inline-block; /* pone todos los elementos uno al lado del otro como bloques*/
+    display: block;
+    /*comportamiento de caja*/
+    float: left;
+    border-right: 1px solid #ccc;
+}
+
+#menu ul li a {
+    display: block;
+    padding: 15px;
+    color: #444444;
+}
+
+/*hover: cuando pase con el raton se le pone ese color*/
+#menu ul li:hover {
+    /*parecido a un listener*/
+    background: rgb(5, 33, 87);
+    cursor: pointer;
+}
+
+#menu ul li a:hover {
+    color: white;
+}
+
+.clearfix {
+    float: none;
+    clear: both;
+}
+
+#contenido {
+    width: 69%;
+    float: left;
+}
+
+#contenido h1 {
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding: 15px;
+    color: #444444;
+    text-shadow: 1px 5px 2px gray;
+}
+
+#contenido .caja {
+    width: 40%;
+    height: 250px;
+    background-color: #ccc;
+    color: white;
+    float: left;
+    margin: 20px;
+    text-align: center;
+    line-height: 200px;
+    color: #444;
+    text-transform: uppercase;
+    /* 1param left-right 2param arriba abajo 3param difuminado*/
+    box-shadow: 5px 5px 10px gray;
+    border-radius: 30px;
+    border-radius: 30px 20px 5px 10px;
+    border-radius: 999px;
+}
+
+.sombra-interior{
+    box-shadow: 5px 5px 10px gray inset !important;
+}
+
+#lateral {
+    float: left;
+    width: 30%;
+    border: 1px solid red;
+    min-height: 500px;
+    max-height: 650px;
+    text-align: justify;
+    overflow: hidden;
+    overflow: scroll;
+    overflow-y: scroll;
+    /*-y pone la barra vertical si no se ponia*/
+    text-indent: 15px;
+    /*word-spacing: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    /*text-decoration: line-through; /*line-through tachar texto , underline para subrallar */
+}
+
+footer{
+    width: 100%;
+    height: 55px;
+    line-height: 55px;
+    background: #eee;
+    text-align: center;
+    border-top: 1px;
+    color: #444;
+}
+
+.libre{
+    /*POSITION sirve para definir la posicion del elemento por defecto
+    POSITION static es la que esta por defecto. POSITION relative posiciona el elemento desdes su posición original.
+    POSICION ABSOLUTA elmina la posición original y pasa a ser la del navegador.
+    */
+    position: absolute;
+    top: 300px;
+    left: 50%;
+    border: 1px solid black;
+    background: red;
+    width: 50px;
+    height: 50px;
+    font-size: 13px;
+}
+
+.libre1{
+    z-index: 1; /*z-index el valor más alto se coloca arriba*/
+
+}
+
+.libre2{
+    background: green;
+    top: 280px;
+    z-index: 2;
+}
+
+.fija {
+    position: fixed; /*acompaña al scroll. Se tiene que acompañar de una posicion si no no aparece en pantalla*/
+    top: 50%;
+    left: 0%;
+    border: 1px solid black;
+    background-color: blue;
+    color: white;
+    width: 50px;
+    height: 50px;
+    font-size: 13px;;
+}

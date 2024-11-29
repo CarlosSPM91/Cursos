@@ -1,0 +1,61 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+#layout {
+    width: 80%;
+    height: 400px;
+    margin: 0 auto;
+    display: grid; /*formato columna*/
+    grid-gap: 5px;
+    border: 3px solid orangered;
+    padding: 10px;
+    grid-template-columns: calc(25% - 10px) calc(25% - 10px) calc(25% - 10px) calc(25% - 10px);
+    grid-template-columns: repeat(4, 25% - 10px);
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 3fr;
+}
+
+#layout .caja {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    padding: 20px;
+    background: grey;
+    border: 4px solid black;
+}
+
+#layout .red{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    background: red;
+
+}
+#layout .green{
+    grid-row-start: 2;
+    grid-row-end: 4;
+    background: green;
+
+}
+#layout .blue{
+    background: blue;
+
+}
+#layout .pink{
+    background: pink;
+
+}
+#layout .orangered{
+    background: orangered;
+
+}
+#layout .orange{
+    /* grid-column-start: 1;
+    grid-column-end: 3; */
+    grid-column: 2/3;
+    background: orange;
+
+}

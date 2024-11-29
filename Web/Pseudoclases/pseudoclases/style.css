@@ -1,0 +1,88 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ul li {
+    font-size: 20px;
+}
+
+ul li:first-child {
+    color: purple;
+    font-weight: bold;
+
+}
+
+ul li:nth-child(2) {
+    /*esta pseudo sirve para seleccionar el segundo de la lista*/
+    color: orangered;
+    font-weight: bold;
+}
+
+ul li:last-child {
+    color: gray;
+    font-weight: bold;
+}
+
+#mi-enlace {
+    font-size: 30px;
+    color: gray;
+}
+
+#mi-enlace:link {
+    color: red;
+
+}
+
+#mi-enlace:visited {
+    color: green;
+}
+
+.nav_link {
+    background: red;
+}
+
+.nav_link:target {
+    /*target es para cuando suceda el evento*/
+    background-color: blue;
+}
+
+:root {
+    --blue: blue;
+    /*creacion de una variable*/
+
+}
+
+h1 {
+    color: var(--blue);
+}
+
+/* p::selection{
+    background-color: blueviolet;
+} */
+/* p::first-line{
+    background-color: orangered;
+} */
+p::first-letter {
+    background-color: chartreuse;
+}
+
+p::before {
+    /*agregar contenido*/
+    content: '((==';
+    background-image: url('IconoUser.png');
+    position: absolute;
+    width: 15px;
+    height: 15px;
+}
+
+p::after{
+     /*agregar contenido*/
+     content: '=))';
+     /* background-image: url('C:\Users\carlo\OneDrive\Documentos\Proyectos\Cursos\Web\IconoUser.png'); */
+     position: absolute;
+     width: 15px;
+     height: 15px;
+}
+input[type="text"]::placeholder {
+    color: red;
+}
