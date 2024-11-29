@@ -7,6 +7,7 @@ import '/widgets/stack.dart';
 import '/widgets/scaffold.dart';
 import '/widgets/safe_area.dart';
 import '/widgets/single_child_scroll_view.dart';
+import '/widgets/custom_icon.dart';
 
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MySingleChildScrollView(),
+      home: CustomIcons(),
       
     );
   }
