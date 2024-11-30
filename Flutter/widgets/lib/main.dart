@@ -6,6 +6,7 @@ import '/widgets/container.dart';
 import '/widgets/stack.dart';
 import '/widgets/scaffold.dart';
 import '/widgets/safe_area.dart';
+import '/widgets/my_images.dart';
 import '/widgets/single_child_scroll_view.dart';
 import '/widgets/custom_icon.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: CustomIcons(),
+      home: MyImage(),
       
     );
   }

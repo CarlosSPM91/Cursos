@@ -10,6 +10,8 @@ class CustomIcons extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            CupertinoActivityIndicator(),
+            CupertinoSearchTextField(),
             Icon(
               HouseCustom.image2vector,
               size: 100,
