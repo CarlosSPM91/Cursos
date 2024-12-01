@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets/facebook_ui/facebook_ui.dart';
+import 'package:widgets/widgets_prove/aspect_ratio.dart';
 
 void main() {
   runApp(
@@ -21,9 +22,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        fontFamily: "nunito",
+      ),
       darkTheme: ThemeData.dark(),
       home: FacebookUi(),
+      
     );
   }
 }

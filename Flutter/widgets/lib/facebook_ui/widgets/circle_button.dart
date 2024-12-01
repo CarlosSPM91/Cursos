@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgets/icons/custom_icons_icons.dart';
 
 class CircleButton extends StatelessWidget {
   final Color color;

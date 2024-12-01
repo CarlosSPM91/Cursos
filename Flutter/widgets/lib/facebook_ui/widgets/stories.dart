@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgets/facebook_ui/widgets/avatar.dart';
 import 'package:widgets/models/story.dart';
 
 import 'story_item.dart';

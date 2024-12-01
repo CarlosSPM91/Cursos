@@ -1,15 +1,40 @@
+import 'package:faker/faker.dart' as fake;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:widgets/facebook_ui/widgets/publication_item.dart';
 import 'package:widgets/facebook_ui/widgets/quick_actions.dart';
 import 'package:widgets/facebook_ui/widgets/stories.dart';
 import 'package:widgets/facebook_ui/widgets/whats_on_your_mind.dart';
 import 'package:widgets/icons/custom_icons_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:widgets/models/publication.dart';
 import './widgets/circle_button.dart';
 
 class FacebookUi extends StatelessWidget {
   @override
   Widget build(Object context) {
+    final faker = fake.Faker();
+    final publications = <Publication>[];
+
+    for (int i = 0; i < 50; i++) {
+      final random = faker.randomGenerator;
+      final reactioIndex = random.integer(Reaction.values.length - 1);
+
+      final publication = Publication(
+        currentUser: User(
+          avatar: faker.image.loremPicsum(),
+          username: faker.person.name(),
+        ),
+        title: faker.lorem.sentence(),
+        createdAt: faker.date.dateTime(),
+        imageUrl: faker.image.loremPicsum(),
+        commentsCount: random.integer(50000),
+        sharesCount: random.integer(50000),
+        currenReaction: Reaction.values[reactioIndex],
+      );
+      publications.add(publication);
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -57,12 +82,21 @@ class FacebookUi extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          SizedBox(height: 10),
-          WhatIsOnYourMind(),
-          SizedBox(height: 20),
-          QuickActions(),
-          SizedBox(height: 20),
+          const SizedBox(height: 10),
+          const WhatIsOnYourMind(),
+          const SizedBox(height: 20),
+          const QuickActions(),
+          const SizedBox(height: 20),
           Stories(),
+          const SizedBox(height: 20),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (_, index) => PublicationItem(
+              publication: publications[index],
+            ),
+            itemCount: publications.length,
+          ),
         ],
       ),
     );
