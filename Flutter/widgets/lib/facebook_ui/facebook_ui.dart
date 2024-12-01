@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:widgets/facebook_ui/widgets/quick_actions.dart';
+import 'package:widgets/facebook_ui/widgets/stories.dart';
+import 'package:widgets/facebook_ui/widgets/whats_on_your_mind.dart';
 import 'package:widgets/icons/custom_icons_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import './widgets/circle_button.dart';
@@ -38,6 +41,7 @@ class FacebookUi extends StatelessWidget {
           CircleButton(
             color: Color(0xff7BBAFF),
             iconData: CustomIcons.user_friends,
+            showBadge: true,
           ),
           SizedBox(
             width: 15,
@@ -49,6 +53,16 @@ class FacebookUi extends StatelessWidget {
           SizedBox(
             width: 15,
           ),
+        ],
+      ),
+      body: ListView(
+        children: [
+          SizedBox(height: 10),
+          WhatIsOnYourMind(),
+          SizedBox(height: 20),
+          QuickActions(),
+          SizedBox(height: 20),
+          Stories(),
         ],
       ),
     );
