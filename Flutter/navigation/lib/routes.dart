@@ -1,0 +1,13 @@
+
+
+class Routes {
+  Routes._();
+
+  static const initialRoute = splash;
+
+  static const home = "/home";
+  static const splash = "/splash";
+  static const counter = "/counter";
+  static const login = "/login";
+  static const colorPicker = "/color-picker";
+}
