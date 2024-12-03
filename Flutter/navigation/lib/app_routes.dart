@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:navigation/pages/color_picker.dart';
 import 'package:navigation/pages/counter_page.dart';
+import 'package:navigation/pages/dialogs_page.dart';
 import 'package:navigation/pages/login_page.dart';
 import 'package:navigation/pages/menu_page.dart';
 import 'package:navigation/pages/splash_page.dart';
@@ -16,6 +17,7 @@ Map<String, Widget Function(BuildContext)> get appRoutes {
     Routes.splash: (context) => const SplashPage(),
     Routes.counter: (context) => const CounterPage(),
     Routes.colorPicker: (context) => const ColorPicker(),
+    Routes.dialogs: (context) => const DialogsPage(),
     Routes.login: (context) {
       final email = getArguments<String>(context);
       return LoginPage(email: email);

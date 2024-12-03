@@ -1,8 +1,21 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:navigation/pages/color_picker.dart';
 
 import '../routes.dart';
+
+class PageData {
+  final String name;
+  final String label;
+  final Object? arguments;
+  final void Function(Object?)? onResult;
+
+  const PageData({
+    required this.name,
+    required this.label,
+    this.arguments,
+    this.onResult,
+  });
+}
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -14,25 +27,57 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   MaterialColor _color = Colors.red;
 
-  void _onTap(BuildContext context) {
-    final faker = Faker();
-    final email = faker.internet.email();
-    // final route = MaterialPageRoute(
-    //   builder: (_) => LoginPage(email: email),
-    // );
-    // final route = MaterialPageRoute(
-    //   settings: RouteSettings(
-    //     arguments: faker.internet.email(),
-    //   ),
-    //   builder: (_) => LoginPage(),
-    // );
-    Navigator.pushNamed(
-      context,
-      Routes.login,
-      arguments: email,
-    );
-    // Navigator.pushReplacement(context, route);
+  // void _onTap(BuildContext context) {
+  // final faker = Faker();
+  // final email = faker.internet.email();
+  // final route = MaterialPageRoute(
+  //   builder: (_) => LoginPage(email: email),
+  // );
+  // final route = MaterialPageRoute(
+  //   settings: RouteSettings(
+  //     arguments: faker.internet.email(),
+  //   ),
+  //   builder: (_) => LoginPage(),
+  // );
+  // Navigator.pushNamed(
+  //   context,
+  //   Routes.login,
+  //   arguments: email,
+  // );
+  // Navigator.pushReplacement(context, route);
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = <PageData>[
+      const PageData(
+        name: Routes.login,
+        label: "Go to Login",
+        arguments: "test@test.com",
+      ),
+      const PageData(
+        name: Routes.counter,
+        label: "Go to counter",
+      ),
+      PageData(
+        name: Routes.colorPicker,
+        label: "Pick color",
+        onResult: (result) {
+          if (result is MaterialColor) {
+            _color = result;
+            setState(() {});
+          }
+        },
+      ),
+      const PageData(
+        name: Routes.dialogs,
+        label: "Go to dialogs",
+      ),
+    ];
   }
+
+  late final List<PageData> _pages;
 
   @override
   Widget build(BuildContext context) {
@@ -40,40 +85,19 @@ class _MenuPageState extends State<MenuPage> {
       appBar: AppBar(
         backgroundColor: _color,
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            onTap: () => _onTap(context),
-            title: const Text("Go to Login"),
-            trailing: const Icon(Icons.arrow_right_alt_outlined),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.pushNamed(context, Routes.counter);
-            },
-            title: const Text("Go to Counter"),
-            trailing: const Icon(Icons.arrow_right_alt_outlined),
-          ),
-          ListTile(
+      body: ListView.builder(
+        itemBuilder: (_, index) {
+          final data = _pages[index];
+          return ListTile(
+            title: Text(data.label),
             onTap: () async {
-              // final route = MaterialPageRoute<MaterialColor>(
-              //   builder: (_) => const ColorPicker(),
-              // );
-              // final  result = await Navigator.push(context, route);
-              // print(result);
-              final result =
-                  await Navigator.pushNamed(context, Routes.colorPicker)
-                      as MaterialColor?;
-
-              if (result != null) {
-                _color = result;
-                setState(() {});
-              }
+              final result = await Navigator.pushNamed(context, data.name,
+                  arguments: data.arguments);
+                  if(data.onResult != null){ data.onResult!(result);}
             },
-            title: const Text("Go to Pick Color"),
-            trailing: const Icon(Icons.arrow_right_alt_outlined),
-          ),
-        ],
+          );
+        },
+        itemCount: _pages.length,
       ),
     );
   }

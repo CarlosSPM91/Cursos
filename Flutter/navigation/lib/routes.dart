@@ -10,4 +10,5 @@ class Routes {
   static const counter = "/counter";
   static const login = "/login";
   static const colorPicker = "/color-picker";
+  static const dialogs = "/dialogs";
 }
