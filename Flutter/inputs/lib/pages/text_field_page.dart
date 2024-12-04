@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inputs/models/country.dart';
 import 'package:inputs/constants/countries.dart';
+
+import '../utils/capitalize_input_formatter.dart';
 
 class TextFieldPage extends StatefulWidget {
   const TextFieldPage({super.key});
@@ -24,7 +27,6 @@ class _TextFieldPageState extends State<TextFieldPage> {
     // _countries= countryList;
 
     _countries = countries.map<Country>(Country.fromJson).toList();
-
   }
 
   @override
@@ -35,7 +37,6 @@ class _TextFieldPageState extends State<TextFieldPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     late final List<Country> filteredList;
     if (_query.isEmpty) {
       filteredList = _countries;
@@ -52,23 +53,46 @@ class _TextFieldPageState extends State<TextFieldPage> {
         ),
         backgroundColor: Colors.white,
         title: TextField(
-          controller: _textEditingController,
+            controller: _textEditingController,
+            inputFormatters: [
+              // FilteringTextInputFormatter(
+              //   RegExp(
+              //     r"([A-Z]|[a-z])",
+              //   ),
+              //   allow: true,
+              //   // replacementString: "-"
+              // ),
+              FilteringTextInputFormatter.allow(
+                RegExp(
+                  r"^[a-zA-Z\s]*$",
+                ),
+              ),
+                CapitalizeInputFormatter(),
+              // FilteringTextInputFormatter.deny(
+              //   RegExp(
+              //     r"([A-Z]|[a-z])",
+              //   ),
+              // ),
+            ],
             onChanged: (text) {
               _query = text;
               setState(() {});
             },
-            decoration:  InputDecoration(
-              // label: Text("search..."),
-              hintText: "Search",
-              hintStyle: const TextStyle(color: Colors.black26),
-              prefixIcon: const Icon(Icons.search),
-              suffixIcon: IconButton(onPressed: (){
-                _textEditingController.text="";
-                _query="";
-                FocusScope.of(context).unfocus();
-                // setState(() {});
-              }, icon: const Icon(Icons.clear)),
-                contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+            decoration: InputDecoration(
+                // label: Text("search..."),
+                hintText: "Search",
+                hintStyle: const TextStyle(color: Colors.black26),
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      _textEditingController.text = "";
+                      _query = "";
+                      FocusScope.of(context).unfocus();
+                      // setState(() {});
+                    },
+                    icon: const Icon(Icons.clear)),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                 focusedBorder: InputBorder.none,
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.green),
