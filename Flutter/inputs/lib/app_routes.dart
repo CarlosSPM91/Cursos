@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inputs/pages/calendar_page.dart';
 import 'package:inputs/pages/check_box_page.dart';
 import 'package:inputs/pages/keyboard_types_page.dart';
 import 'package:inputs/pages/radio_button_page.dart';
@@ -15,6 +16,7 @@ Map<String, Widget Function(BuildContext)> get appRoutes{
     Routes.checkBox: (_)=> const CheckBoxPage(),
     Routes.radio: (_)=> const RadioButtonPage(),
     Routes.slider: (_)=> const SliderPage(),
+    Routes.calendar: (_)=> const CalendarPage(),
     
   };
 }

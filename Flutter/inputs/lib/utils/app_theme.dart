@@ -7,10 +7,10 @@ ThemeData getThemeData(BuildContext context) {
     colorScheme: ColorScheme.light(
       primary: Colors.red,
     ),
+    useMaterial3: false,
     hintColor: Colors.blue,
     inputDecorationTheme: InputDecorationTheme(
       // floatingLabelStyle: TextStyle(color: Colors.amber),
-
       focusedBorder: const OutlineInputBorder(
         borderSide: BorderSide(
           width: 1,
@@ -23,7 +23,6 @@ ThemeData getThemeData(BuildContext context) {
       ),
       disabledBorder: const UnderlineInputBorder(),
     ),
-    useMaterial3: false,
     checkboxTheme: CheckboxThemeData(
         checkColor: WidgetStateProperty.all(Colors.red),
         fillColor: WidgetStateProperty.all(Colors.amber),
@@ -47,6 +46,6 @@ ThemeData getThemeData(BuildContext context) {
       inactiveTickMarkColor: Colors.blue,
       trackHeight: 20,
       thumbShape: RoundSliderThumbShape(enabledThumbRadius: 20),
-    )
+    ),
   );
 }
