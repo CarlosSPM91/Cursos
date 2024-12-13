@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets/facebook_ui/facebook_ui.dart';
 
+import 'widgets_prove/scaffold.dart';
+
 void main() {
   runApp(
     DevicePreview(
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "nunito",
       ),
       darkTheme: ThemeData.dark(),
-      home: FacebookUi(),
+      home: MyScaffold(),
       
     );
   }
