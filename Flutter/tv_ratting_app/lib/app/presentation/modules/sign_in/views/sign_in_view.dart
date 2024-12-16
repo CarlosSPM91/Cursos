@@ -30,7 +30,7 @@ class _SignInViewState extends State<SignInView> {
                     decoration: const InputDecoration(hintText: "Username"),
                     onChanged: (text) {
                       setState(() {
-                        _username = text.trim().toLowerCase();
+                        _username = text.trim();
                       });
                     },
                     validator: (text) {
@@ -47,11 +47,11 @@ class _SignInViewState extends State<SignInView> {
                     decoration: const InputDecoration(hintText: "Password"),
                     onChanged: (text) {
                       setState(() {
-                        _password = text.replaceAll(" ", "").toLowerCase();
+                        _password = text.replaceAll(" ", "");
                       });
                     },
                     validator: (text) {
-                      text = text?.replaceAll(" ", "").toLowerCase() ?? "";
+                      text = text?.replaceAll(" ", "") ?? "";
                       if (text.length < 4) {
                         return "invalid Password";
                       }
@@ -105,6 +105,7 @@ class _SignInViewState extends State<SignInView> {
           SignInFailure.notFound: "Not Found",
           SignInFailure.unAuthorized: "Invalid Password",
           SignInFailure.unknown: "Error",
+          SignInFailure.network: "Network Error",
         }[failure];
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(message!)),

@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tv_ratting_app/app/data/services/remote/authentication_api.dart';
 import 'package:tv_ratting_app/app/domain/either.dart';
 import 'package:tv_ratting_app/app/domain/enums.dart';
 import 'package:tv_ratting_app/app/domain/model/user.dart';
@@ -8,8 +9,9 @@ const _key = "sessionId";
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final FlutterSecureStorage _segureStorage;
+  final AutenthicationAPI _autenthicationAPI;
 
-  AuthenticationRepositoryImpl(this._segureStorage);
+  AuthenticationRepositoryImpl(this._segureStorage, this._autenthicationAPI);
 
   @override
   Future<User?> getUserData() {
@@ -27,19 +29,40 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     String username,
     String password,
   ) async {
-    if (username != "test") {
-      return Either.left(SignInFailure.notFound);
-    }
-    if (password != "123456") {
-      return Either.left(SignInFailure.unAuthorized);
-    }
+    final requestTokenResult = await _autenthicationAPI.createRequestToken();
 
-    await _segureStorage.write(key: _key, value: "123");
-    return Either.right(
-      User(),
+    return requestTokenResult.when(
+      (failure) async => Either.left(failure),
+      (requestToken) async {
+        final loginResult = await _autenthicationAPI.createSessionwithLogin(
+          username: username,
+          password: password,
+          requestToken: requestToken,
+        );
+
+        return loginResult.when(
+          (failure) async => Either.left(failure),
+          (newRequestToken) async {
+            final sessionResult = await _autenthicationAPI.createSession(
+              newRequestToken,
+            );
+
+            return sessionResult.when(
+              (failure) async => Either.left(failure),
+              (sessionId) async {
+                await _segureStorage.write(
+                  key: _key,
+                  value: sessionId,
+                );
+                return Either.right(User());
+              },
+            );
+          },
+        );
+      },
     );
   }
-  
+
   @override
   Future<void> signOut() {
     return _segureStorage.delete(key: _key);
