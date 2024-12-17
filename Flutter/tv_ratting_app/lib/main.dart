@@ -17,17 +17,17 @@ import 'package:tv_ratting_app/app/my_app.dart';
 void main() {
   runApp(
     MultiProvider(providers: [
-      Provider<AcountRepository>(
-        create: (_) => AccountRepositoryImpl(),
-      ),
-      Provider<ConnectivityRepository>(
-        create: (_) => ConnectivityRepositoryImpl(
+      Provider<AcountRepository>(create: (_) {
+        return AccountRepositoryImpl();
+      }),
+      Provider<ConnectivityRepository>(create: (_) {
+        return ConnectivityRepositoryImpl(
           Connectivity(),
           InternetChecker(),
-        ),
-      ),
-      Provider<AuthenticationRepository>(
-        create: (_) => AuthenticationRepositoryImpl(
+        );
+      }),
+      Provider<AuthenticationRepository>(create: (_) {
+        return AuthenticationRepositoryImpl(
           const FlutterSecureStorage(),
           AutenthicationAPI(
             Http(
@@ -36,8 +36,8 @@ void main() {
               client: http.Client(),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     ], child: const MyApp()),
   );
 }
