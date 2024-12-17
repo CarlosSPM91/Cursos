@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
-import 'package:tv_ratting_app/main.dart';
+
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -12,7 +14,7 @@ class HomeView extends StatelessWidget {
         child: Center(
           child: TextButton(
             onPressed: () {
-              Injector.of(context).authenticationRepository.signOut();
+              Provider.of<AuthenticationRepository>(context, listen: false).signOut();
               Navigator.of(context).pushReplacementNamed(Routes.signIn);
             },
             child: const Text("SignOut"),

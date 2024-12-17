@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
@@ -15,7 +16,7 @@ class InternetChecker {
         return list.isNotEmpty && list.first.rawAddress.isNotEmpty;
       }
     } catch (e) {
-      print(e.runtimeType);
+      log(e.runtimeType as String);
       return false;
     }
   }
