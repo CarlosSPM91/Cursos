@@ -1,29 +1,42 @@
-import 'package:flutter/foundation.dart';
+import 'package:tv_ratting_app/app/domain/either.dart';
+import 'package:tv_ratting_app/app/domain/enums.dart';
+import 'package:tv_ratting_app/app/domain/model/user.dart';
+import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
+import 'package:tv_ratting_app/app/presentation/global/state_notifier.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/sign_in_state.dart';
 
-class SignInCotroller extends ChangeNotifier {
-  SignInState _state = SignInState();
-  bool _mounted = true;
-
-  SignInState get state => _state;
-  bool get mounted => _mounted;
+class SignInCotroller extends StateNotifier<SignInState> {
+  SignInCotroller(
+    super.state, {
+    required this.authenticationRepository,
+  });
+  final AuthenticationRepository authenticationRepository;
 
   void onUsernameChanged(String text) {
-    _state = _state.copyWith(username: text.trim());
+    onlyUpdate(
+      state.copyWith(username: text.trim()),
+    );
   }
 
   void onPasswordChanged(String text) {
-    _state = _state.copyWith(password: text.replaceAll(" ", ""));
+    onlyUpdate(
+      state.copyWith(
+        password: text.replaceAll(" ", ""),
+      ),
+    );
   }
 
-  void onFetchingChanged(bool value) {
-    _state = _state.copyWith(fetching: value);
-    notifyListeners();
-  }
+  Future<Either<SignInFailure, User>> submit() async {
+    state = state.copyWith(fetching: true);
+    final result = await authenticationRepository.signIn(
+      state.username,
+      state.password,
+    );
+    result.when(
+      (_) => state = state.copyWith(fetching: false),
+      (_) => null,
+    );
 
-  @override
-  void dispose() {
-    _mounted = false;
-    super.dispose();
+    return result;
   }
 }
