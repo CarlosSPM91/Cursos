@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/domain/enums.dart';
+import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/sign_in_cotroller.dart';
 import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 
@@ -30,8 +31,6 @@ class SubmitButton extends StatelessWidget {
 
     final result = await controller.submit();
 
-    
-
     if (!controller.mounted) {
       return;
     }
@@ -49,6 +48,8 @@ class SubmitButton extends StatelessWidget {
         );
       },
       (user) {
+        final SessionController sessionController = context.read();
+        sessionController.setUser(user);
         Navigator.of(context).pushReplacementNamed(Routes.home);
       },
     );

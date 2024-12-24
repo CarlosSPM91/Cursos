@@ -1,24 +1,37 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/data/http/http.dart';
 import 'package:tv_ratting_app/app/data/repositories_implementation/account_repository_impl.dart';
 import 'package:tv_ratting_app/app/data/repositories_implementation/authentication_repository_implementation.dart';
 import 'package:tv_ratting_app/app/data/repositories_implementation/connectivity_repository_impl.dart';
+import 'package:tv_ratting_app/app/data/services/local/session_service.dart';
+import 'package:tv_ratting_app/app/data/services/remote/account_api.dart';
 import 'package:tv_ratting_app/app/data/services/remote/authentication_api.dart';
 import 'package:tv_ratting_app/app/data/services/remote/internet_checker.dart';
-import 'package:tv_ratting_app/app/domain/repositories/acount_repository.dart';
+import 'package:tv_ratting_app/app/domain/repositories/account_repository.dart';
 import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 import 'package:tv_ratting_app/app/domain/repositories/connectivity_repository.dart';
 import 'package:tv_ratting_app/app/my_app.dart';
+import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
 
 void main() {
+  final sessionService = SessionService(const FlutterSecureStorage());
+  final http = Http(
+    baseURL: "https://api.themoviedb.org/3",
+    apiKey: "fb9888dbd1f188ef5dcc0b4ead5bcfa8",
+    client: Client(),
+  );
+  final acountAPI = AccountApi(http);
   runApp(
     MultiProvider(providers: [
-      Provider<AcountRepository>(create: (_) {
-        return AccountRepositoryImpl();
+      Provider<AccountRepository>(create: (_) {
+        return AccountRepositoryImpl(
+          acountAPI,
+          sessionService,
+        );
       }),
       Provider<ConnectivityRepository>(create: (_) {
         return ConnectivityRepositoryImpl(
@@ -28,16 +41,16 @@ void main() {
       }),
       Provider<AuthenticationRepository>(create: (_) {
         return AuthenticationRepositoryImpl(
-          const FlutterSecureStorage(),
-          AutenthicationAPI(
-            Http(
-              baseURL: "https://api.themoviedb.org/3",
-              apiKey: "fb9888dbd1f188ef5dcc0b4ead5bcfa8",
-              client: http.Client(),
-            ),
-          ),
+          sessionService,
+          AutenthicationAPI(http),
+          acountAPI,
         );
       }),
+      ChangeNotifierProvider<SessionController>(
+        create: (context) => SessionController(
+          authenticationRepository: context.read(),
+        ),
+      ),
     ], child: const MyApp()),
   );
 }
