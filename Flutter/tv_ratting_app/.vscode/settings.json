@@ -6,6 +6,6 @@
     "editor.fontLigatures": false,
     "command-runner.commands": {
         "pub get": "flutter pub get",
-        "buid_runner": "flutter pub run buid_runner build"
+        "buid_runner": "flutter pub run build_runner build"
     }
 }
