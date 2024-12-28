@@ -1,7 +1,7 @@
 import 'package:tv_ratting_app/app/data/services/local/session_service.dart';
 import 'package:tv_ratting_app/app/data/services/remote/account_api.dart';
 import 'package:tv_ratting_app/app/data/services/remote/authentication_api.dart';
-import 'package:tv_ratting_app/app/domain/either.dart';
+import 'package:tv_ratting_app/app/domain/either/either.dart';
 import 'package:tv_ratting_app/app/domain/failures/sign_in/sign_in_failure.dart';
 import 'package:tv_ratting_app/app/domain/model/user/user.dart';
 import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';

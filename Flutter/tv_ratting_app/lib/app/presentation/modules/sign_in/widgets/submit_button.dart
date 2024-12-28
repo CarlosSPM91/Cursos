@@ -34,12 +34,13 @@ class SubmitButton extends StatelessWidget {
       return;
     }
     result.when(
-      left:(failure) {
+      left: (failure) {
         final message = failure.when(
           notFound: () => "Not Found",
           network: () => "Network Error",
           unkown: () => "Error",
           unauthorized: () => "Invalid Password",
+          notVerified: () => "Not Verified",
         );
         // final message = (){
         // if(failure is NotFound){

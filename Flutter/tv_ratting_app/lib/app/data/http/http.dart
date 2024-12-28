@@ -1,13 +1,14 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
-import 'package:tv_ratting_app/app/domain/either.dart';
+import 'package:tv_ratting_app/app/domain/either/either.dart';
 
-part 'failure.dart';
-part 'parse_response_body.dart';
+part 'http_failure.dart';
 part 'logs.dart';
+part 'parse_response_body.dart';
 
 enum HttpMethod { get, post, patch, delete, put }
 
@@ -33,12 +34,10 @@ class Http {
     Map<String, dynamic> body = const {},
     bool useApiKey = true,
   }) async {
-
     Map<String, dynamic> logs = {};
     StackTrace? stackTrace;
 
     try {
-
       if (useApiKey) {
         queryParameters = {
           ...queryParameters,
@@ -55,7 +54,7 @@ class Http {
       }
 
       headers = {"Content-Type": "application/json", ...headers};
-      
+
       late final Response response;
       final bodyString = jsonEncode(body);
       logs = {
@@ -69,16 +68,29 @@ class Http {
         case HttpMethod.get:
           response = await _client.get(url);
         case HttpMethod.post:
-          response =
-              await _client.post(url, headers: headers, body: bodyString);
+          response = await _client.post(
+            url,
+            headers: headers,
+            body: bodyString,
+          );
         case HttpMethod.patch:
-          response =
-              await _client.patch(url, headers: headers, body: bodyString);
+          response = await _client.patch(
+            url,
+            headers: headers,
+            body: bodyString,
+          );
         case HttpMethod.delete:
-          response =
-              await _client.delete(url, headers: headers, body: bodyString);
+          response = await _client.delete(
+            url,
+            headers: headers,
+            body: bodyString,
+          );
         case HttpMethod.put:
-          response = await _client.put(url, headers: headers, body: bodyString);
+          response = await _client.put(
+            url,
+            headers: headers,
+            body: bodyString,
+          );
           break;
       }
       final statusCode = response.statusCode;
@@ -95,7 +107,10 @@ class Http {
         );
       }
       return Either.left(
-        HttpFailure(statusCode: statusCode),
+        HttpFailure(
+          statusCode: statusCode,
+          data: responseBody,
+        ),
       );
     } catch (e, s) {
       stackTrace = s;
@@ -126,8 +141,6 @@ class Http {
         "endTime": DateTime.now().toString(),
       };
       _printLogs(logs, stackTrace);
-      
     }
   }
 }
-

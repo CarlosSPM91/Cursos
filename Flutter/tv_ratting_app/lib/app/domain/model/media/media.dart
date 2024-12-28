@@ -17,8 +17,6 @@ class Media with _$Media {
     @JsonKey(name: "backdrop_path") required String backdropPath,
     @JsonKey(name: "vote_average") required double voteAverage,
     @JsonKey(name: "media_type") required String type,
-    
-
   }) = _Media;
 
   factory Media.fromJson(Json json) => _$MediaFromJson(json);

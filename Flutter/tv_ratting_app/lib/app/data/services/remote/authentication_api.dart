@@ -1,5 +1,5 @@
 import 'package:tv_ratting_app/app/data/http/http.dart';
-import 'package:tv_ratting_app/app/domain/either.dart';
+import 'package:tv_ratting_app/app/domain/either/either.dart';
 import 'package:tv_ratting_app/app/domain/failures/sign_in/sign_in_failure.dart';
 
 class AutenthicationAPI {
@@ -15,20 +15,31 @@ class AutenthicationAPI {
       }
       switch (failure.statusCode) {
         case 401:
-          return Either.left(SignInFailure.unauthorized(),);
+          if (failure.data is Map && (failure.data as Map)["status_code"] == 32) {
+            return Either.left(
+              SignInFailure.notVerified(),
+            );
+          }
+          return Either.left(
+            SignInFailure.unauthorized(),
+          );
         case 402:
-          return Either.left(SignInFailure.notFound(),);
+          return Either.left(
+            SignInFailure.notFound(),
+          );
       }
     }
     return Either.left(SignInFailure.unkown());
   }
 
   Future<Either<SignInFailure, String>> createRequestToken() async {
-    final result = await _http.request("/authentication/token/new",
-        onSucces: (responseBody) {
-      final json = responseBody as Map;
-      return json["request_token"] as String;
-    });
+    final result = await _http.request(
+      "/authentication/token/new",
+      onSucces: (responseBody) {
+        final json = responseBody as Map;
+        return json["request_token"] as String;
+      },
+    );
 
     return result.when(
       left: _handleFailure,
@@ -36,10 +47,11 @@ class AutenthicationAPI {
     );
   }
 
-  Future<Either<SignInFailure, String>> createSessionwithLogin(
-      {required String username,
-      required String password,
-      required String requestToken}) async {
+  Future<Either<SignInFailure, String>> createSessionwithLogin({
+    required String username,
+    required String password,
+    required String requestToken,
+  }) async {
     final result = await _http.request(
       "/authentication/token/validate_with_login",
       onSucces: (responseBody) {
@@ -50,7 +62,7 @@ class AutenthicationAPI {
       body: {
         "username": username,
         "password": password,
-        "request_token": requestToken
+        "request_token": requestToken,
       },
     );
 
@@ -60,13 +72,16 @@ class AutenthicationAPI {
     );
   }
 
-  Future<Either<SignInFailure, String>> createSession(
-      String requestToken) async {
-    final result = await _http.request("/authentication/session/new",
-        onSucces: (responseBody) {
-      final json = responseBody as Map;
-      return json["session_id"] as String;
-    }, method: HttpMethod.post, body: {"request_token": requestToken});
+  Future<Either<SignInFailure, String>> createSession(String requestToken) async {
+    final result = await _http.request(
+      "/authentication/session/new",
+      onSucces: (responseBody) {
+        final json = responseBody as Map;
+        return json["session_id"] as String;
+      },
+      method: HttpMethod.post,
+      body: {"request_token": requestToken},
+    );
 
     return result.when(
       left: _handleFailure,
