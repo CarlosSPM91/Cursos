@@ -4,4 +4,9 @@ targets:
             json_serializable:
                 generate_for:
                     include:
+                        - lib/app/domain/model/**/*
                         - lib/app/domain/model/*
+            frezeed:
+                generate_for:
+                    include:
+                        - lib/app/presentation/**/**_state.dart

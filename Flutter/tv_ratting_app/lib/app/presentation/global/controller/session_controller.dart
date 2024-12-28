@@ -1,4 +1,4 @@
-import 'package:tv_ratting_app/app/domain/model/user.dart';
+import 'package:tv_ratting_app/app/domain/model/user/user.dart';
 import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 import 'package:tv_ratting_app/app/presentation/global/state_notifier.dart';
 

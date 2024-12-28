@@ -1,11 +1,12 @@
 {
     "editor.codeActionsOnSave": {
-        "source.fixAll": true,
-        "source.organizeImports": true
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
     },
     "editor.fontLigatures": false,
     "command-runner.commands": {
         "pub get": "flutter pub get",
-        "buid_runner": "flutter pub run build_runner build"
+        "buid_runner": "flutter pub run build_runner build",
+        "buid_runner delete conflicting": "flutter pub run build_runner build --delete-conflicting-outputs",
     }
 }

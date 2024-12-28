@@ -1,9 +1,9 @@
 import 'package:tv_ratting_app/app/domain/either.dart';
 import 'package:tv_ratting_app/app/domain/enums.dart';
-import 'package:tv_ratting_app/app/domain/model/user.dart';
+import 'package:tv_ratting_app/app/domain/model/user/user.dart';
 import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 import 'package:tv_ratting_app/app/presentation/global/state_notifier.dart';
-import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/sign_in_state.dart';
+import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/state/sign_in_state.dart';
 
 class SignInCotroller extends StateNotifier<SignInState> {
   SignInCotroller(
