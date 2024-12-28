@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_ratting_app/app/domain/enums.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/sign_in_cotroller.dart';
 import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
@@ -35,19 +34,37 @@ class SubmitButton extends StatelessWidget {
       return;
     }
     result.when(
-      (failure) {
-        controller.submit();
-        final message = {
-          SignInFailure.notFound: "Not Found",
-          SignInFailure.unAuthorized: "Invalid Password",
-          SignInFailure.unknown: "Error",
-          SignInFailure.network: "Network Error",
-        }[failure];
+      left:(failure) {
+        final message = failure.when(
+          notFound: () => "Not Found",
+          network: () => "Network Error",
+          unkown: () => "Error",
+          unauthorized: () => "Invalid Password",
+        );
+        // final message = (){
+        // if(failure is NotFound){
+        //   return "Not Found";
+        // }
+        // if(failure is Unauthorized){
+        //   return "Invalid Password";
+        // }
+        // if(failure is Network){
+        //   return "Network Error";
+        // }
+        // return "Error";
+        // }();
+        // controller.submit();
+        // final message = {
+        //   SignInFailure.notFound: ,
+        //   SignInFailure.unAuthorized: ,
+        //   SignInFailure.unknown: "Error",
+        //   SignInFailure.network: "Network Error",
+        // }[failure];
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message!)),
+          SnackBar(content: Text(message)),
         );
       },
-      (user) {
+      right: (user) {
         final SessionController sessionController = context.read();
         sessionController.setUser(user);
         Navigator.of(context).pushReplacementNamed(Routes.home);

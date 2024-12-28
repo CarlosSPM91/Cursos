@@ -2,7 +2,7 @@ import 'package:tv_ratting_app/app/data/services/local/session_service.dart';
 import 'package:tv_ratting_app/app/data/services/remote/account_api.dart';
 import 'package:tv_ratting_app/app/data/services/remote/authentication_api.dart';
 import 'package:tv_ratting_app/app/domain/either.dart';
-import 'package:tv_ratting_app/app/domain/enums.dart';
+import 'package:tv_ratting_app/app/domain/failures/sign_in/sign_in_failure.dart';
 import 'package:tv_ratting_app/app/domain/model/user/user.dart';
 import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 
@@ -28,8 +28,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     final requestTokenResult = await _autenthicationAPI.createRequestToken();
 
     return requestTokenResult.when(
-      (failure) async => Either.left(failure),
-      (requestToken) async {
+      left: (failure) async => Either.left(failure),
+      right: (requestToken) async {
         final loginResult = await _autenthicationAPI.createSessionwithLogin(
           username: username,
           password: password,
@@ -37,21 +37,21 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         );
 
         return loginResult.when(
-          (failure) async => Either.left(failure),
-          (newRequestToken) async {
+          left:(failure) async => Either.left(failure),
+          right: (newRequestToken) async {
             final sessionResult = await _autenthicationAPI.createSession(
               newRequestToken,
             );
 
             return sessionResult.when(
-              (failure) async => Either.left(failure),
-              (sessionId) async {
+              left: (failure) async => Either.left(failure),
+              right: (sessionId) async {
                 _sessionService.saveSessionId(sessionId);
 
                 final user = await _accountApi.getAccount(sessionId);
 
                 if (user == null) {
-                  return Either.left(SignInFailure.unknown);
+                  return Either.left(SignInFailure.unkown());
                 }
                 return Either.right(user);
               },

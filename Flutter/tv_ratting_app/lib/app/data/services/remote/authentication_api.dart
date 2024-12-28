@@ -1,6 +1,6 @@
 import 'package:tv_ratting_app/app/data/http/http.dart';
 import 'package:tv_ratting_app/app/domain/either.dart';
-import 'package:tv_ratting_app/app/domain/enums.dart';
+import 'package:tv_ratting_app/app/domain/failures/sign_in/sign_in_failure.dart';
 
 class AutenthicationAPI {
   // final _apiKey = "fb9888dbd1f188ef5dcc0b4ead5bcfa8";
@@ -11,16 +11,16 @@ class AutenthicationAPI {
   Either<SignInFailure, String> _handleFailure(HttpFailure failure) {
     if (failure.statusCode != null) {
       if (failure.exception is NetworkException) {
-        return Either.left(SignInFailure.network);
+        return Either.left(SignInFailure.network());
       }
       switch (failure.statusCode) {
         case 401:
-          return Either.left(SignInFailure.unAuthorized);
+          return Either.left(SignInFailure.unauthorized(),);
         case 402:
-          return Either.left(SignInFailure.notFound);
+          return Either.left(SignInFailure.notFound(),);
       }
     }
-    return Either.left(SignInFailure.unknown);
+    return Either.left(SignInFailure.unkown());
   }
 
   Future<Either<SignInFailure, String>> createRequestToken() async {
@@ -31,8 +31,8 @@ class AutenthicationAPI {
     });
 
     return result.when(
-      _handleFailure,
-      (requestToken) => Either.right(requestToken),
+      left: _handleFailure,
+      right: (requestToken) => Either.right(requestToken),
     );
   }
 
@@ -55,8 +55,8 @@ class AutenthicationAPI {
     );
 
     return result.when(
-      _handleFailure,
-      (requestToken) => Either.right(requestToken),
+      left: _handleFailure,
+      right: (requestToken) => Either.right(requestToken),
     );
   }
 
@@ -69,8 +69,8 @@ class AutenthicationAPI {
     }, method: HttpMethod.post, body: {"request_token": requestToken});
 
     return result.when(
-      _handleFailure,
-      (sessionId) => Either.right(sessionId),
+      left: _handleFailure,
+      right: (sessionId) => Either.right(sessionId),
     );
   }
 }

@@ -6,9 +6,9 @@ part 'sign_in_state.freezed.dart';
 class SignInState with _$SignInState {
 
   const factory SignInState({
-    required String username,
-    required String password,
-    required bool fetching,
+    @Default("") String username,
+    @Default("") String password,
+    @Default(false) bool fetching,
   })= _SignInState;
 
 

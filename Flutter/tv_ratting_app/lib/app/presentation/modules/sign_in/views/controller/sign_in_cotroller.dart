@@ -1,5 +1,5 @@
 import 'package:tv_ratting_app/app/domain/either.dart';
-import 'package:tv_ratting_app/app/domain/enums.dart';
+import 'package:tv_ratting_app/app/domain/failures/sign_in/sign_in_failure.dart';
 import 'package:tv_ratting_app/app/domain/model/user/user.dart';
 import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 import 'package:tv_ratting_app/app/presentation/global/state_notifier.dart';
@@ -33,8 +33,8 @@ class SignInCotroller extends StateNotifier<SignInState> {
       state.password,
     );
     result.when(
-      (_) => state = state.copyWith(fetching: false),
-      (_) => null,
+      left:(_) => state = state.copyWith(fetching: false),
+      right:(_) => null,
     );
 
     return result;
