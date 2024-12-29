@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
-import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
+import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/trending_list.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -13,34 +11,11 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    final SessionController sessionController = Provider.of(context);
-    final user = sessionController.state!;
-
-    return Scaffold(
+    return const Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (user.avatar_path != null) Image.network("https://image.tmdb.org/t/p/w500${user.avatar_path}"),
-            Text(
-              user.id.toString() ?? "",
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            Text(
-              user.username ?? "",
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            TextButton(
-              onPressed: () async {
-                await sessionController.signOut();
-                if (mounted) Navigator.of(context).pushReplacementNamed(Routes.signIn);
-              },
-              child: const Text("SignOut"),
-            ),
+            TrendingList(),
           ],
         ),
       ),

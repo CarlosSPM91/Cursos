@@ -4,7 +4,6 @@ import 'package:tv_ratting_app/app/domain/either/either.dart';
 import 'package:tv_ratting_app/app/domain/failures/http_request/http_request_failure.dart';
 import 'package:tv_ratting_app/app/domain/model/media/media.dart';
 import 'package:tv_ratting_app/app/domain/time_window.dart';
-import 'package:tv_ratting_app/app/domain/typedefs.dart';
 
 class TrendingApi {
   final Http _http;
@@ -15,7 +14,7 @@ class TrendingApi {
     final result = await _http.request(
       "/trending/all/${timeWindow.name}",
       onSucces: (json) {
-        final list = json["result"] as List<Json>;
+        final list = List.from(json["results"]);
         // final List<Media> items = [];
         // for (final item in list) {
         //   items.add(

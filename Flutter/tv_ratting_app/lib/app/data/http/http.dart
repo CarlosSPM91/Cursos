@@ -116,7 +116,7 @@ class Http {
       stackTrace = s;
       logs = {
         ...logs,
-        "exception": e.runtimeType,
+        "exception": e.runtimeType.toString(),
       };
       if (e is ClientException || e is SocketException) {
         logs = {
@@ -140,7 +140,7 @@ class Http {
         ...logs,
         "endTime": DateTime.now().toString(),
       };
-      _printLogs(logs, stackTrace);
+      // _printLogs(logs, stackTrace);
     }
   }
 }
