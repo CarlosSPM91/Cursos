@@ -5,8 +5,8 @@ import 'package:tv_ratting_app/app/domain/failures/http_request/http_request_fai
 import 'package:tv_ratting_app/app/domain/model/media/media.dart';
 import 'package:tv_ratting_app/app/domain/repositories/trending_repository.dart';
 import 'package:tv_ratting_app/app/domain/time_window.dart';
-import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/trending_tile.dart';
-import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/trending_time_window.dart';
+import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/movies_and_series/trending_tile.dart';
+import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/movies_and_series/trending_time_window.dart';
 
 typedef EitherListMedia = Either<HttpRequestFailure, List<Media>>;
 
@@ -48,7 +48,7 @@ class _TrendingListState extends State<TrendingList> {
         AspectRatio(
           aspectRatio: 16 / 8,
           child: LayoutBuilder(builder: (_, constraints) {
-            final width = constraints.maxHeight * 0.60;
+            final width = constraints.maxHeight * 0.65;
             return Center(
               child: FutureBuilder<EitherListMedia>(
                 key: ValueKey(_future),
