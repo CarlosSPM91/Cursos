@@ -5,6 +5,7 @@ import 'package:tv_ratting_app/app/domain/failures/http_request/http_request_fai
 import 'package:tv_ratting_app/app/domain/model/media/media.dart';
 import 'package:tv_ratting_app/app/domain/repositories/trending_repository.dart';
 import 'package:tv_ratting_app/app/domain/time_window.dart';
+import 'package:tv_ratting_app/app/presentation/global/widgets/request_failed.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/movies_and_series/trending_tile.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/movies_and_series/trending_time_window.dart';
 
@@ -58,7 +59,11 @@ class _TrendingListState extends State<TrendingList> {
                     return const CircularProgressIndicator();
                   }
                   return snapshot.data!.when(
-                    left: (failure) => Text(failure.toString()),
+                    left: (failure) => RequestFailed(onRetry: () {
+                      setState(() {
+                        _future = _repository.getMoviesAndSeries(_timeWindow);
+                      });
+                    }),
                     right: (list) {
                       return ListView.separated(
                         padding: const EdgeInsets.symmetric(horizontal: 15),

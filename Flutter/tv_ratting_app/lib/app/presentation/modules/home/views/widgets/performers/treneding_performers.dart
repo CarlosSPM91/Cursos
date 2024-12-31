@@ -4,6 +4,7 @@ import 'package:tv_ratting_app/app/domain/either/either.dart';
 import 'package:tv_ratting_app/app/domain/failures/http_request/http_request_failure.dart';
 import 'package:tv_ratting_app/app/domain/model/performer/performer.dart';
 import 'package:tv_ratting_app/app/domain/repositories/trending_repository.dart';
+import 'package:tv_ratting_app/app/presentation/global/widgets/request_failed.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/performers/performer_tile.dart';
 
 typedef EitherListPerformer = Either<HttpRequestFailure, List<Performer>>;
@@ -36,6 +37,7 @@ class _TrnedingPerformersState extends State<TrenedingPerformers> {
   Widget build(BuildContext context) {
     return Expanded(
       child: FutureBuilder<EitherListPerformer>(
+        key: ValueKey(_future),
         future: _future,
         builder: (_, snapshot) {
           if (!snapshot.hasData) {
@@ -44,7 +46,11 @@ class _TrnedingPerformersState extends State<TrenedingPerformers> {
             );
           }
           return snapshot.data!.when(
-            left: (_) => const Text("Error"),
+            left: (_) => RequestFailed(onRetry: () {
+              setState(() {
+                _future = context.read<TrendingRepository>().getPerformers();
+              });
+            }),
             right: (list) => Stack(
               alignment: Alignment.bottomCenter,
               children: [
