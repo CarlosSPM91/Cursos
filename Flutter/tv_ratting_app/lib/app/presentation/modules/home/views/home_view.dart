@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tv_ratting_app/app/presentation/modules/home/controller/home_controller.dart';
+import 'package:tv_ratting_app/app/presentation/modules/home/controller/home_state.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/movies_and_series/trending_list.dart';
-import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/performers/treneding_performers.dart';
+import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/performers/trending_performers.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -12,15 +15,36 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 10),
-            TrendingList(),
-            SizedBox(height: 20),
-            TrenedingPerformers(),
-          ],
+    return ChangeNotifierProvider(
+      create: (_) {
+        final controller = HomeController(
+          HomeState(),
+          trendingRepository: context.read(),
+        );
+        controller.init();
+        return controller;
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) => RefreshIndicator(
+              onRefresh: () => context.read<HomeController>().init(),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: SizedBox(
+                  height: constraints.maxHeight,
+                  child: const Column(
+                    children: [
+                      SizedBox(height: 10),
+                      TrendingList(),
+                      SizedBox(height: 20),
+                      TrendingPerformers(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

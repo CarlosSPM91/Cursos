@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tv_ratting_app/app/domain/model/media/media.dart';
 import 'package:tv_ratting_app/app/domain/typedefs.dart';
 
 part 'performer.freezed.dart';

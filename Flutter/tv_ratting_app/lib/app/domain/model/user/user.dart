@@ -17,7 +17,7 @@ class User with _$User {
       name: "avatar",
       fromJson: avatarPathFromJson,
     )
-    String? avatar_path,
+    String? avatarPath,
   }) = _User;
 
   factory User.fromJson(Json json) => _$UserFromJson(json);
