@@ -234,10 +234,10 @@ packages:
     dependency: "direct main"
     description:
       name: extended_image
-      sha256: "93890a88d89ce017789f6c031c32ad8d2c685f1a5c25c169550746d973ca5e44"
+      sha256: "85199f9233e03abc2ce2e68cbb2991648666af4a527ae4e6250935be8edfddae"
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.9"
+    version: "9.1.0"
   extended_image_library:
     dependency: transitive
     description:
@@ -834,6 +834,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  url_strategy:
+    dependency: "direct main"
+    description:
+      name: url_strategy
+      sha256: "6eff69fa0900b731a23552b38b54389f399d247dbb0998f2cbdf25bef6790a7c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   vector_graphics:
     dependency: transitive
     description:

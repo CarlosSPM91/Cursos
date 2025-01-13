@@ -7,20 +7,25 @@ import 'package:tv_ratting_app/app/data/http/http.dart';
 import 'package:tv_ratting_app/app/data/repositories_implementation/account_repository_impl.dart';
 import 'package:tv_ratting_app/app/data/repositories_implementation/authentication_repository_implementation.dart';
 import 'package:tv_ratting_app/app/data/repositories_implementation/connectivity_repository_impl.dart';
+import 'package:tv_ratting_app/app/data/repositories_implementation/movies_repository_impl.dart';
 import 'package:tv_ratting_app/app/data/repositories_implementation/trending_repository_impl.dart';
 import 'package:tv_ratting_app/app/data/services/local/session_service.dart';
 import 'package:tv_ratting_app/app/data/services/remote/account_api.dart';
 import 'package:tv_ratting_app/app/data/services/remote/authentication_api.dart';
 import 'package:tv_ratting_app/app/data/services/remote/internet_checker.dart';
+import 'package:tv_ratting_app/app/data/services/remote/movies_api.dart';
 import 'package:tv_ratting_app/app/data/services/remote/trending_api.dart';
 import 'package:tv_ratting_app/app/domain/repositories/account_repository.dart';
 import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 import 'package:tv_ratting_app/app/domain/repositories/connectivity_repository.dart';
+import 'package:tv_ratting_app/app/domain/repositories/movies_repository.dart';
 import 'package:tv_ratting_app/app/domain/repositories/trending_repository.dart';
 import 'package:tv_ratting_app/app/my_app.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() {
+  setPathUrlStrategy();
   final sessionService = SessionService(const FlutterSecureStorage());
   final http = Http(
     baseURL: "https://api.themoviedb.org/3",
@@ -52,6 +57,11 @@ void main() {
       Provider<TrendingRepository>(
         create: (_) => TrendingRepositoryImpl(
           TrendingApi(http),
+        ),
+      ),
+      Provider<MoviesRepository>(
+        create: (_) => MoviesRepositoryImpl(
+          moviesApi: MoviesApi(http),
         ),
       ),
       ChangeNotifierProvider<SessionController>(
