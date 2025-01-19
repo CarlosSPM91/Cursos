@@ -1,5 +1,8 @@
 import 'package:tv_ratting_app/app/data/services/local/session_service.dart';
 import 'package:tv_ratting_app/app/data/services/remote/account_api.dart';
+import 'package:tv_ratting_app/app/domain/either/either.dart';
+import 'package:tv_ratting_app/app/domain/failures/http_request/http_request_failure.dart';
+import 'package:tv_ratting_app/app/domain/model/media/media.dart';
 import 'package:tv_ratting_app/app/domain/model/user/user.dart';
 import 'package:tv_ratting_app/app/domain/repositories/account_repository.dart';
 
@@ -14,6 +17,17 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   Future<User?> getUserData() async {
-    return _accountApi.getAccount(await _sessionService.sessionId ?? "");
+    final user = await _accountApi.getAccount(
+      await _sessionService.sessionId ?? "",
+    );
+    if (user != null) {
+      await _sessionService.saveAccountId(user.id.toString());
+    }
+    return user;
+  }
+
+  @override
+  Future<Either<HttpRequestFailure, Map<int, Media>>> getFavorites(MediaType type) {
+    return _accountApi.getFavorites(type);
   }
 }

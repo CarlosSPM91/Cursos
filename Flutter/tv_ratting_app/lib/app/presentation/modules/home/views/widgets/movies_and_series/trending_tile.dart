@@ -27,6 +27,14 @@ class TrendingTile extends StatelessWidget {
             ),
           );
         }
+        if (media.type == MediaType.tv) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MovieView(movieId: media.id),
+            ),
+          );
+        }
       },
       child: ClipRRect(
         borderRadius: const BorderRadius.all(

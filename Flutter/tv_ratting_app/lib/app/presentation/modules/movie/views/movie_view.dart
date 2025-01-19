@@ -25,18 +25,20 @@ class MovieView extends StatelessWidget {
       builder: (context, _) {
         final MovieController controller = context.watch();
         return Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: const MovieAppBar(),
-            body: controller.state.map(
-                loading: (_) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                failed: (_) => RequestFailed(
-                      onRetry: () => controller.init(),
-                    ),
-                loaded: (state) => MovieContent(
-                      state: state,
-                    )));
+          extendBodyBehindAppBar: true,
+          appBar: const MovieAppBar(),
+          body: controller.state.map(
+            loading: (_) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            failed: (_) => RequestFailed(
+              onRetry: () => controller.init(),
+            ),
+            loaded: (state) => MovieContent(
+              state: state,
+            ),
+          ),
+        );
       },
     );
   }

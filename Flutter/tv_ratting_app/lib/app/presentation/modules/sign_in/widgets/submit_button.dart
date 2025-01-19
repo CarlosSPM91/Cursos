@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tv_ratting_app/app/presentation/global/controller/favorites/favorites_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/sign_in_cotroller.dart';
 import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
@@ -42,32 +43,15 @@ class SubmitButton extends StatelessWidget {
           unauthorized: () => "Invalid Password",
           notVerified: () => "Not Verified",
         );
-        // final message = (){
-        // if(failure is NotFound){
-        //   return "Not Found";
-        // }
-        // if(failure is Unauthorized){
-        //   return "Invalid Password";
-        // }
-        // if(failure is Network){
-        //   return "Network Error";
-        // }
-        // return "Error";
-        // }();
-        // controller.submit();
-        // final message = {
-        //   SignInFailure.notFound: ,
-        //   SignInFailure.unAuthorized: ,
-        //   SignInFailure.unknown: "Error",
-        //   SignInFailure.network: "Network Error",
-        // }[failure];
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(message)),
         );
       },
       right: (user) {
         final SessionController sessionController = context.read();
+        final FavoritesController favoritesController = context.read();
         sessionController.setUser(user);
+        favoritesController.init();
         Navigator.of(context).pushReplacementNamed(Routes.home);
       },
     );

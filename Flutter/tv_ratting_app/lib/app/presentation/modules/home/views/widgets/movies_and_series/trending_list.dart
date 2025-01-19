@@ -26,37 +26,40 @@ class TrendingList extends StatelessWidget {
         const SizedBox(height: 10),
         AspectRatio(
           aspectRatio: 16 / 8,
-          child: LayoutBuilder(builder: (_, constraints) {
-            final width = constraints.maxHeight * 0.65;
-            return Center(
-              child: moviesAndSeries.when(
-                loading: (_) => const CircularProgressIndicator(),
-                failed: (_) => RequestFailed(
-                  onRetry: () {
-                    controller.loadMoviesAndSeries(
+          child: LayoutBuilder(
+            builder: (_, constraints) {
+              final width = constraints.maxHeight * 0.65;
+              return Center(
+                child: moviesAndSeries.when(
+                  loading: (_) => const CircularProgressIndicator(),
+                  failed: (_) => RequestFailed(
+                    onRetry: () {
+                      controller.loadMoviesAndSeries(
                         moviesAndSeries: MoviesAndSeriesState.loading(
-                      moviesAndSeries.timeWindow,
-                    ));
-                  },
-                ),
-                loaded: (list, _) => ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  itemCount: list.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (_, index) {
-                    final media = list[index];
-                    return TrendingTile(
-                      media: media,
-                      width: width,
-                    );
-                  },
-                  separatorBuilder: (_, __) => const SizedBox(
-                    width: 10,
+                          moviesAndSeries.timeWindow,
+                        ),
+                      );
+                    },
+                  ),
+                  loaded: (list, _) => ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    itemCount: list.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, index) {
+                      final media = list[index];
+                      return TrendingTile(
+                        media: media,
+                        width: width,
+                      );
+                    },
+                    separatorBuilder: (_, __) => const SizedBox(
+                      width: 10,
+                    ),
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            },
+          ),
         ),
       ],
     );
