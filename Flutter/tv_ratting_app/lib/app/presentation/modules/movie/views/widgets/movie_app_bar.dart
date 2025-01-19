@@ -15,14 +15,20 @@ class MovieAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: controller.state.mapOrNull(
         loaded: (movieState) => [
           favoritesController.state.maybeMap(
-            orElse: () =>  Container(width: 20, height: 10, color: Colors.red,),
+            orElse: () => Container(
+              width: 20,
+              height: 10,
+              color: Colors.red,
+            ),
             loaded: (favoriteState) => IconButton(
               onPressed: () {},
-              icon: Icon(favoriteState.movies.containsKey(
-                movieState.movie.id,
-              )
-                  ? Icons.favorite
-                  : Icons.favorite_border),
+              icon: Icon(
+                favoriteState.movies.containsKey(
+                  movieState.movie.id,
+                )
+                    ? Icons.favorite
+                    : Icons.favorite_outline,
+              ),
             ),
           ),
         ],

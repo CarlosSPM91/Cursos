@@ -32,26 +32,30 @@ class AccountApi {
   }
 
   Future<Either<HttpRequestFailure, Map<int, Media>>> getFavorites(MediaType type) async {
-    final session = await _sessionService.sessionId ?? "";
-    final acoount = await _sessionService.accountId;
+    final sessionId = await _sessionService.sessionId ?? "";
+    final accountId = await _sessionService.accountId;
     final result = await _http.request(
-      "acount/$acoount/favorites/${type == MediaType.movie ? "movies" : "tv"}",
+      "/account/$accountId/favorite/${type == MediaType.movie ? "movies" : "tv"}",
       queryParameters: {
-        "session_id": session,
+        "session_id": sessionId,
       },
       onSucces: (json) {
-        final list = json["result"] as List;
-        final iterable = list.map(
-          (e) {
-            final media = Media.fromJson(
-              {...e, "media_type": type.name},
-            );
-            return MapEntry(media.id, media);
-          },
-        );
-        final map = <int, Media>{};
-        map.addEntries(iterable);
-        return map;
+        try {
+          final list = json["results"] as List;
+          final iterable = list.map(
+            (e) {
+              final media = Media.fromJson(
+                {...e, "media_type": type.name},
+              );
+              return MapEntry(media.id, media);
+            },
+          );
+          final Map<int, Media> map = {};
+          map.addEntries(iterable);
+          return map;
+        } catch (e) {
+          throw Exception("Error processing JSON: $e");
+        }
       },
     );
 

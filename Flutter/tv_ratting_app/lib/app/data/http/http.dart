@@ -140,7 +140,7 @@ class Http {
         ...logs,
         "endTime": DateTime.now().toString(),
       };
-      // _printLogs(logs, stackTrace);
+       _printLogs(logs, stackTrace);
     }
   }
 }
