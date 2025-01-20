@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_ratting_app/app/presentation/global/controller/favorites/favorites_controller.dart';
-import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/sign_in_cotroller.dart';
 import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 
@@ -47,13 +45,7 @@ class SubmitButton extends StatelessWidget {
           SnackBar(content: Text(message)),
         );
       },
-      right: (user) {
-        final SessionController sessionController = context.read();
-        final FavoritesController favoritesController = context.read();
-        sessionController.setUser(user);
-        favoritesController.init();
-        Navigator.of(context).pushReplacementNamed(Routes.home);
-      },
+      right: (user) => Navigator.of(context).pushReplacementNamed(Routes.home),
     );
   }
 }

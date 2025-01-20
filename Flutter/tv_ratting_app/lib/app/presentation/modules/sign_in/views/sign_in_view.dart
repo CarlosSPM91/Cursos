@@ -13,7 +13,9 @@ class SignInView extends StatelessWidget {
     return ChangeNotifierProvider<SignInCotroller>(
       create: (_) => SignInCotroller(
         const SignInState(),
-        authenticationRepository: context.read<AuthenticationRepository>()
+        authenticationRepository: context.read<AuthenticationRepository>(),
+        sessionController: context.read(),
+        favoritesController: context.read(),
       ),
       child: Scaffold(
         body: SafeArea(
@@ -21,8 +23,7 @@ class SignInView extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Form(
               child: Builder(builder: (context) {
-                final SignInCotroller controller =
-                    Provider.of(context, listen: true);
+                final SignInCotroller controller = Provider.of(context, listen: true);
                 return AbsorbPointer(
                   absorbing: controller.state.fetching,
                   child: Column(

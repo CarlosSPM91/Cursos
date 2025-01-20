@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tv_ratting_app/app/domain/model/media/media.dart';
 import 'package:tv_ratting_app/app/presentation/modules/movie/views/movie_view.dart';
 import 'package:tv_ratting_app/app/presentation/utils/get_image_url.dart';
+import 'package:tv_ratting_app/app/presentation/utils/go_to_media_detail.dart';
 
 class TrendingTile extends StatelessWidget {
   const TrendingTile({
@@ -19,14 +20,7 @@ class TrendingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (media.type == MediaType.movie) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => MovieView(movieId: media.id),
-            ),
-          );
-        }
+        goToMediaDetails(context, media);
         if (media.type == MediaType.tv) {
           Navigator.push(
             context,

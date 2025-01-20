@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/favorites/favorites_controller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/movie/controller/movie_controller.dart';
+import 'package:tv_ratting_app/app/presentation/utils/mark_as_favorite.dart';
 
 class MovieAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MovieAppBar({super.key});
@@ -21,7 +22,11 @@ class MovieAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Colors.red,
             ),
             loaded: (favoriteState) => IconButton(
-              onPressed: () {},
+              onPressed: () => markAsFavorite(
+                context: context,
+                media: movieState.movie.toMedia(),
+                mounted: () => controller.mounted,
+              ),
               icon: Icon(
                 favoriteState.movies.containsKey(
                   movieState.movie.id,
