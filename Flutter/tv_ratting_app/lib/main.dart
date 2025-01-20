@@ -24,6 +24,7 @@ import 'package:tv_ratting_app/app/my_app.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/favorites/favorites_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/favorites/state/favorites_state.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
+import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() {
@@ -79,6 +80,9 @@ void main() {
           FavoritesState.loading(),
           accountRepository: context.read(),
         ),
+      ),
+      ChangeNotifierProvider<ThemeController>(
+        create: (_) => ThemeController(false),
       ),
     ], child: const MyApp()),
   );

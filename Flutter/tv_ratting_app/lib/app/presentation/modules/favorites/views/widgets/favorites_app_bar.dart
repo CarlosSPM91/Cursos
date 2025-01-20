@@ -10,7 +10,6 @@ class FavoritesAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      
       title: const Text("Favorites"),
       centerTitle: true,
       bottom: TabBar(

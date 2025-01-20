@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/presentation/app_routes.dart';
+import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
+import 'package:tv_ratting_app/app/presentation/global/theme.dart';
 import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 
 class MyApp extends StatelessWidget {
@@ -7,6 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = context.watch();
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -14,6 +18,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: Routes.splash,
         routes: appRoutes,
+        theme: getTheme(themeController.darkMode),
       ),
     );
   }

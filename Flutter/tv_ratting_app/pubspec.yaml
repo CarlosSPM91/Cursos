@@ -21,6 +21,7 @@ dependencies:
   extended_image: ^9.1.0
   flutter_svg: ^2.0.16
   url_strategy: ^0.3.0
+  google_fonts: ^6.2.1
   
 
 dev_dependencies:

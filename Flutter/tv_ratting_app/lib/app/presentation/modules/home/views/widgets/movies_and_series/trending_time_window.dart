@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tv_ratting_app/app/domain/time_window.dart';
+import 'package:tv_ratting_app/app/presentation/global/colors.dart';
+import 'package:tv_ratting_app/app/presentation/global/extensions/build_context_extension.dart';
 
 class TrendingTimeWindow extends StatelessWidget {
   const TrendingTimeWindow({
@@ -24,7 +26,7 @@ class TrendingTimeWindow extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Material(
-              color: const Color(0xfff0f0f0),
+              color: context.darkMode? AppColors.dark : const Color(0xfff0f0f0),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: DropdownButton<TimeWindow>(
