@@ -38,7 +38,7 @@ void main() async {
   final sessionService = SessionService(const FlutterSecureStorage());
   final http = Http(
     baseURL: "https://api.themoviedb.org/3",
-    apiKey: "fb9888dbd1f188ef5dcc0b4ead5bcfa8",
+    apiKey: "",
     client: Client(),
   );
   final acountAPI = AccountApi(
