@@ -44,4 +44,4 @@ app.*.map.json
 *.g.dart
 *.freezed.dart
 lib/app/generated/
-
+lib/app/domain/api_key.dart

@@ -19,6 +19,7 @@ import 'package:tv_ratting_app/app/data/services/remote/authentication_api.dart'
 import 'package:tv_ratting_app/app/data/services/remote/internet_checker.dart';
 import 'package:tv_ratting_app/app/data/services/remote/movies_api.dart';
 import 'package:tv_ratting_app/app/data/services/remote/trending_api.dart';
+import 'package:tv_ratting_app/app/domain/api_key.dart';
 import 'package:tv_ratting_app/app/domain/repositories/account_repository.dart';
 import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 import 'package:tv_ratting_app/app/domain/repositories/connectivity_repository.dart';
@@ -37,8 +38,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sessionService = SessionService(const FlutterSecureStorage());
   final http = Http(
-    baseURL: "https://api.themoviedb.org/3",
-    apiKey: "",
+    baseURL: ApiKey.baseURL,
+    apiKey: ApiKey.apiKey,
     client: Client(),
   );
   final acountAPI = AccountApi(
