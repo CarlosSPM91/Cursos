@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tv_ratting_app/app/presentation/global/widgets/my_scaffold.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/controller/home_controller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/controller/home_state.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/views/widgets/movies_and_series/trending_list.dart';
@@ -21,7 +22,7 @@ class _HomeViewState extends State<HomeView> {
         HomeState(),
         trendingRepository: context.read(),
       )..init(),
-      child: Scaffold(
+      child: MyScaffold(
         appBar: AppBar(
           actions: [
             IconButton(

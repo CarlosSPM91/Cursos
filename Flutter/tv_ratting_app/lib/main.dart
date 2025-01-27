@@ -48,7 +48,13 @@ void main() async {
   );
   final sysDarkMode = ui.PlatformDispatcher.instance.platformBrightness == Brightness.dark;
 
+  final connectivity = ConnectivityRepositoryImpl(
+    Connectivity(),
+    InternetChecker(),
+  );
   final preferences = await SharedPreferences.getInstance();
+  await connectivity.initialize();
+  
   runApp(
     MultiProvider(
       providers: [
@@ -61,12 +67,7 @@ void main() async {
           },
         ),
         Provider<ConnectivityRepository>(
-          create: (_) {
-            return ConnectivityRepositoryImpl(
-              Connectivity(),
-              InternetChecker(),
-            );
-          },
+          create: (_) => connectivity,
         ),
         Provider<AuthenticationRepository>(
           create: (_) {
