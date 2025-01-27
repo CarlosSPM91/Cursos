@@ -33,6 +33,7 @@ class Http {
     Map<String, String> queryParameters = const {},
     Map<String, dynamic> body = const {},
     bool useApiKey = true,
+    String languageCode = "en",
   }) async {
     Map<String, dynamic> logs = {};
     StackTrace? stackTrace;
@@ -50,10 +51,18 @@ class Http {
       );
 
       if (queryParameters.isNotEmpty) {
-        url = url.replace(queryParameters: queryParameters);
+        url = url.replace(
+          queryParameters: {
+            ...queryParameters,
+            "language": languageCode,
+          },
+        );
       }
 
-      headers = {"Content-Type": "application/json", ...headers};
+      headers = {
+        "Content-Type": "application/json",
+        ...headers,
+      };
 
       late final Response response;
       final bodyString = jsonEncode(body);
@@ -140,7 +149,7 @@ class Http {
         ...logs,
         "endTime": DateTime.now().toString(),
       };
-       _printLogs(logs, stackTrace);
+      _printLogs(logs, stackTrace);
     }
   }
 }

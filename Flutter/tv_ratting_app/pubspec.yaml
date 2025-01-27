@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   cupertino_icons: ^1.0.8
   connectivity_plus: ^6.1.1
@@ -23,6 +25,10 @@ dependencies:
   url_strategy: ^0.3.0
   google_fonts: ^6.2.1
   shared_preferences: ^2.3.5
+  slang: ^4.4.1
+  slang_flutter: ^4.4.0
+  intl: ^0.19.0
+  
   
 
 dev_dependencies:
@@ -34,6 +40,7 @@ dev_dependencies:
   json_serializable: ^6.9.0
   freezed: ^2.5.7
   flutter_gen: ^5.8.0
+  slang_build_runner: ^4.4.2
 
 
 flutter:

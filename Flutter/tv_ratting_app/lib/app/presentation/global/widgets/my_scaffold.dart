@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/domain/repositories/connectivity_repository.dart';
+import 'package:tv_ratting_app/app/generated/translations.g.dart';
 
 class MyScaffold extends StatelessWidget {
   const MyScaffold({
@@ -39,10 +40,10 @@ class MyScaffold extends StatelessWidget {
                       ? Container(
                           width: double.infinity,
                           color: Colors.grey,
-                          child: const Text(
-                            "No Internet",
+                          child: Text(
+                            texts.mis.noInternet,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.red,
                             ),
                           ),
