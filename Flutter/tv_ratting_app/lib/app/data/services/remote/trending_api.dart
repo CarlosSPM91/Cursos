@@ -1,4 +1,5 @@
 import 'package:tv_ratting_app/app/data/http/http.dart';
+import 'package:tv_ratting_app/app/data/services/local/language_service.dart';
 import 'package:tv_ratting_app/app/data/services/utils/handle_failure.dart';
 import 'package:tv_ratting_app/app/domain/either/either.dart';
 import 'package:tv_ratting_app/app/domain/failures/http_request/http_request_failure.dart';
@@ -9,12 +10,17 @@ import 'package:tv_ratting_app/app/domain/typedefs.dart';
 
 class TrendingApi {
   final Http _http;
+  final LanguageService _languageService;
 
-  TrendingApi(this._http);
+  TrendingApi(
+    this._http,
+    this._languageService,
+  );
 
   Future<Either<HttpRequestFailure, List<Media>>> getMoviesAndSeries(TimeWindow timeWindow) async {
     final result = await _http.request(
       "/trending/all/${timeWindow.name}",
+      languageCode: _languageService.languageCode,
       onSucces: (json) {
         final list = List<Json>.from(json["results"]);
         // final List<Media> items = [];
@@ -36,15 +42,15 @@ class TrendingApi {
   Future<Either<HttpRequestFailure, List<Performer>>> getPerformers(TimeWindow timeWindow) async {
     final result = await _http.request(
       "/trending/person/${timeWindow.name}",
+      languageCode: _languageService.languageCode,
       onSucces: (json) {
         final list = List<Json>.from(json["results"]);
         return list
             .where(
-              (i) =>
-              i["known_for_department"] == "Acting" &&
-              i["profile_path"] != null,
+              (i) => i["known_for_department"] == "Acting" && i["profile_path"] != null,
             )
-            .map((e) => Performer.fromJson(e)).toList();
+            .map((e) => Performer.fromJson(e))
+            .toList();
       },
     );
 

@@ -1,7 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tv_ratting_app/app/domain/model/media/media.dart';
-import 'package:tv_ratting_app/app/presentation/modules/movie/views/movie_view.dart';
 import 'package:tv_ratting_app/app/presentation/utils/get_image_url.dart';
 import 'package:tv_ratting_app/app/presentation/utils/go_to_media_detail.dart';
 
@@ -21,14 +20,7 @@ class TrendingTile extends StatelessWidget {
     return InkWell(
       onTap: () {
         goToMediaDetails(context, media);
-        if (media.type == MediaType.tv) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => MovieView(movieId: media.id),
-            ),
-          );
-        }
+        
       },
       child: ClipRRect(
         borderRadius: const BorderRadius.all(

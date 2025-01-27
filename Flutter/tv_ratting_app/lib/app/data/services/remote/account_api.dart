@@ -1,4 +1,5 @@
 import 'package:tv_ratting_app/app/data/http/http.dart';
+import 'package:tv_ratting_app/app/data/services/local/language_service.dart';
 import 'package:tv_ratting_app/app/data/services/local/session_service.dart';
 import 'package:tv_ratting_app/app/data/services/utils/handle_failure.dart';
 import 'package:tv_ratting_app/app/domain/either/either.dart';
@@ -9,10 +10,12 @@ import 'package:tv_ratting_app/app/domain/model/user/user.dart';
 class AccountApi {
   final Http _http;
   final SessionService _sessionService;
+  final LanguageService _languageService;
 
   AccountApi(
     this._http,
     this._sessionService,
+    this._languageService,
   );
 
   Future<User?> getAccount(String sessionId) async {
@@ -39,6 +42,7 @@ class AccountApi {
       queryParameters: {
         "session_id": sessionId,
       },
+      languageCode: _languageService.languageCode,
       onSucces: (json) {
         try {
           final list = json["results"] as List;
@@ -65,8 +69,11 @@ class AccountApi {
     );
   }
 
-  Future<Either<HttpRequestFailure, void>> markAsFavorite(
-      {required int mediaId, required MediaType type, required bool favorite}) async {
+  Future<Either<HttpRequestFailure, void>> markAsFavorite({
+    required int mediaId,
+    required MediaType type,
+    required bool favorite,
+  }) async {
     final accountId = await _sessionService.accountId;
     final sessionId = await _sessionService.sessionId ?? "";
 

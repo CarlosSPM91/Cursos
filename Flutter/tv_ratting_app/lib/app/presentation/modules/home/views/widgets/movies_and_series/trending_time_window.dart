@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tv_ratting_app/app/domain/time_window.dart';
+import 'package:tv_ratting_app/app/generated/translations.g.dart';
 import 'package:tv_ratting_app/app/presentation/global/colors.dart';
 import 'package:tv_ratting_app/app/presentation/global/extensions/build_context_extension.dart';
 
@@ -18,29 +19,29 @@ class TrendingTimeWindow extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15),
       child: Row(
         children: [
-          const Text(
-            "TRENDING",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            texts.home.trending,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const Spacer(),
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Material(
-              color: context.darkMode? AppColors.dark : const Color(0xfff0f0f0),
+              color: context.darkMode ? AppColors.dark : const Color(0xfff0f0f0),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: DropdownButton<TimeWindow>(
                   value: timeWindow,
                   isDense: true,
                   underline: const SizedBox(),
-                  items: const [
+                  items: [
                     DropdownMenuItem(
                       value: TimeWindow.day,
-                      child: Text("Last 24h"),
+                      child: Text(texts.home.dropDownButton.last24),
                     ),
                     DropdownMenuItem(
                       value: TimeWindow.week,
-                      child: Text("Last week"),
+                      child: Text(texts.home.dropDownButton.lastWeek),
                     ),
                   ],
                   onChanged: (newTimeWindow) {

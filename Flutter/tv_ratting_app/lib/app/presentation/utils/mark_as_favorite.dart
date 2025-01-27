@@ -4,8 +4,11 @@ import 'package:tv_ratting_app/app/domain/model/media/media.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/favorites/favorites_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/dialogs/show_loader.dart';
 
-Future<void> markAsFavorite(
-    {required BuildContext context, required Media media, required bool Function() mounted}) async {
+Future<void> markAsFavorite({
+  required BuildContext context,
+  required Media media,
+  required bool Function() mounted,
+}) async {
   final FavoritesController favoritesController = context.read();
   final result = await showLoader(
     context,

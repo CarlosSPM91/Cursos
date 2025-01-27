@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tv_ratting_app/app/generated/assets.gen.dart';
+import 'package:tv_ratting_app/app/generated/translations.g.dart';
 
 class RequestFailed extends StatelessWidget {
   const RequestFailed({
@@ -20,11 +21,11 @@ class RequestFailed extends StatelessWidget {
           Expanded(
             child: Assets.svg.er404.svg(),
           ),
-          Text(text ?? "Request Failed,"),
+          Text(text ?? texts.mis.requestFail),
           const SizedBox(height: 10),
           MaterialButton(
             onPressed: onRetry,
-            child: const Text("Retry"),
+            child: Text(texts.mis.retry),
           ),
         ],
       ),
