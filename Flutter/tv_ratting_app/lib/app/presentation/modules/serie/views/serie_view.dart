@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tv_ratting_app/app/inject_repositories.dart';
 import 'package:tv_ratting_app/app/presentation/global/widgets/request_failed.dart';
 import 'package:tv_ratting_app/app/presentation/modules/serie/controller/serie_controller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/serie/controller/state/serie_state.dart';
@@ -20,7 +21,7 @@ class SerieView extends StatelessWidget {
       create: (_) => SerieController(
         SerieState.loading(),
         serieId: serieId,
-        serieRepository: context.read(),
+        serieRepository: Repositories.series,
       )..init(),
       builder: (context, _) {
         final SerieController controller = context.watch();

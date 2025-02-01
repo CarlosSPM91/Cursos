@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_ratting_app/app/domain/repositories/authentication_repository.dart';
 import 'package:tv_ratting_app/app/generated/translations.g.dart';
+import 'package:tv_ratting_app/app/inject_repositories.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/sign_in_cotroller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/state/sign_in_state.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/widgets/submit_button.dart';
@@ -14,7 +14,7 @@ class SignInView extends StatelessWidget {
     return ChangeNotifierProvider<SignInCotroller>(
       create: (_) => SignInCotroller(
         const SignInState(),
-        authenticationRepository: context.read<AuthenticationRepository>(),
+        authenticationRepository: Repositories.authentication,
         sessionController: context.read(),
         favoritesController: context.read(),
       ),

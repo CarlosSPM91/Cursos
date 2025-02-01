@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_ratting_app/app/domain/repositories/language_repository.dart';
 import 'package:tv_ratting_app/app/generated/translations.g.dart';
+import 'package:tv_ratting_app/app/inject_repositories.dart';
 import 'package:tv_ratting_app/app/presentation/app_routes.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/theme.dart';
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void didChangeLocales(List<Locale>? locales) {
     if (locales?.isNotEmpty ?? false) {
       final locale = locales!.first;
-      context.read<LanguageRepository>().setLanguageCode(locale.languageCode);
+      Repositories.language.setLanguageCode(locale.languageCode);
       Intl.defaultLocale = locale.toLanguageTag();
       LocaleSettings.setLocaleRaw(
         locale.languageCode,

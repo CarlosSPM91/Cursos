@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/domain/repositories/connectivity_repository.dart';
 import 'package:tv_ratting_app/app/generated/translations.g.dart';
+import 'package:tv_ratting_app/app/inject_repositories.dart';
 
 class MyScaffold extends StatelessWidget {
   const MyScaffold({
@@ -14,7 +14,7 @@ class MyScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ConnectivityRepository connectivityRepository = context.read();
+    final ConnectivityRepository connectivityRepository = Repositories.connectivity;
     return Scaffold(
       appBar: appBar,
       body: SizedBox(

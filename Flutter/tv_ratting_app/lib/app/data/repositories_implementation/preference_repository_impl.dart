@@ -4,14 +4,18 @@ import 'package:tv_ratting_app/app/domain/repositories/preferences_repository.da
 
 class PreferenceRepositoryImpl implements PreferencesRepository {
   final SharedPreferences _preferences;
+  final bool _systemDarkMode;
 
-  PreferenceRepositoryImpl(this._preferences);
+  PreferenceRepositoryImpl(
+    this._preferences,
+    this._systemDarkMode,
+  );
 
   @override
-  bool? get darkMode {
+  bool get darkMode {
     return _preferences.getBool(
       Preferences.darkMode.name,
-    );
+    ) ?? _systemDarkMode;
   }
 
   @override

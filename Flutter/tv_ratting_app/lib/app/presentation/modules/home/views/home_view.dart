@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tv_ratting_app/app/inject_repositories.dart';
 import 'package:tv_ratting_app/app/presentation/global/widgets/my_scaffold.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/controller/home_controller.dart';
 import 'package:tv_ratting_app/app/presentation/modules/home/controller/home_state.dart';
@@ -22,7 +23,7 @@ class _HomeViewState extends State<HomeView> {
       key: Key("home-$languageCode"),
       create: (_) => HomeController(
         HomeState(),
-        trendingRepository: context.read(),
+        trendingRepository: Repositories.trending,
       )..init(),
       child: MyScaffold(
         appBar: AppBar(

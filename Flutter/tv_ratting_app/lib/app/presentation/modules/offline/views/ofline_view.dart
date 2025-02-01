@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tv_ratting_app/app/domain/repositories/connectivity_repository.dart';
+import 'package:tv_ratting_app/app/inject_repositories.dart';
 import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 
 class OfflineView extends StatefulWidget {
@@ -18,7 +17,7 @@ class _OfflineViewState extends State<OfflineView> {
   @override
   void initState() {
     super.initState();
-    _subscription = context.read<ConnectivityRepository>().onInternetChanged.listen(
+    _subscription = Repositories.connectivity.onInternetChanged.listen(
       (connected) {
         if (connected) {
           Navigator.of(context).pushReplacementNamed(Routes.splash);

@@ -11,6 +11,7 @@ class ConnectivityRepositoryImpl implements ConnectivityRepository {
 
   late bool _hasInternet;
   StreamSubscription? _subscription;
+  bool _initialized = false;
 
   ConnectivityRepositoryImpl(
     this._connectivity,
@@ -29,6 +30,7 @@ class ConnectivityRepositoryImpl implements ConnectivityRepository {
     _hasInternet = await hasInternet(
       await _connectivity.checkConnectivity(),
     );
+    _initialized = true;
 
     _connectivity.onConnectivityChanged.listen(
       (event) async {
@@ -49,7 +51,10 @@ class ConnectivityRepositoryImpl implements ConnectivityRepository {
   }
 
   @override
-  bool get hasInternet => _hasInternet;
+  bool get hasInternet {
+    assert(_initialized, 'initialize must be called first');
+    return _hasInternet;
+  }
 
   @override
   Stream<bool> get onInternetChanged => _streamController.stream;

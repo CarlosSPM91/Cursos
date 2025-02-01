@@ -1,10 +1,9 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/domain/either/either.dart';
 import 'package:tv_ratting_app/app/domain/failures/http_request/http_request_failure.dart';
 import 'package:tv_ratting_app/app/domain/model/performer/performer.dart';
-import 'package:tv_ratting_app/app/domain/repositories/movies_repository.dart';
+import 'package:tv_ratting_app/app/inject_repositories.dart';
 import 'package:tv_ratting_app/app/presentation/global/widgets/request_failed.dart';
 import 'package:tv_ratting_app/app/presentation/utils/get_image_url.dart';
 
@@ -29,7 +28,7 @@ class _MovieCastState extends State<MovieCast> {
   }
 
   void _initFuture() {
-    _future = context.read<MoviesRepository>().getCastByMovie(widget.movieId);
+    _future = Repositories.movies.getCastByMovie(widget.movieId);
   }
 
   @override
