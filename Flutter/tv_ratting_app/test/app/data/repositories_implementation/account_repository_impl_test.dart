@@ -101,7 +101,7 @@ void main() {
     expect(result.value, isA<HttpRequestFailure>());
   });
 
-  test('AccountRepositoryImpl - getFavorites - exit', () async {
+  test('AccountRepositoryImpl - getFavorites - success', () async {
     mockGet(
       statusCode: 200,
       json: {
@@ -133,4 +133,64 @@ void main() {
 
     expect(result.value, isA<Map<int, Media>>());
   });
+
+  test(
+    'AccountRepositoryImpl - markAsFavorite - success',
+    () async {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer(
+        (_) async => Response(
+          jsonEncode({
+            "status_code": 12,
+            "status_message": "",
+          }),
+          201,
+        ),
+      );
+
+      final result = await repository.markAsFavorite(
+        mediaId: 123,
+        type: MediaType.movie,
+        favorite: true,
+      );
+
+      expect(result.value is! HttpRequestFailure, true);
+    },
+  );
+
+  test(
+    'AccountRepositoryImpl - markAsFavorite - fail',
+    () async {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer(
+        (_) async => Response(
+          jsonEncode({
+            "success": false,
+            "status_code": 5,
+            "status_message": "Invalid parameters: Your request parameters are incorrect."
+          }),
+          400,
+        ),
+      );
+
+      
+      final result = await repository.markAsFavorite(
+        mediaId: 123,
+        type: MediaType.movie,
+        favorite: true,
+      );
+
+      expect(result.value, isA<HttpRequestFailure>());
+    },
+  );
 }
