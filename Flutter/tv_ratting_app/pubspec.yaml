@@ -41,6 +41,7 @@ dev_dependencies:
   freezed: ^2.5.7
   flutter_gen: ^5.8.0
   slang_build_runner: ^4.4.2
+  mockito: ^5.4.4
 
 
 flutter:

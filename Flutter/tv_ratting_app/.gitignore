@@ -43,5 +43,8 @@ app.*.map.json
 /android/app/release
 *.g.dart
 *.freezed.dart
+*.mocks.dart
 lib/app/generated/
 lib/app/domain/api_key.dart
+coverage/
+
