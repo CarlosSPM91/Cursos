@@ -100,31 +100,13 @@ mixin RouterMixin on State<MyApp> {
       ),
     ];
 
-    final overrideRoutes = widget.overrideRoutes;
-    if (overrideRoutes?.isNotEmpty ?? false) {
-      final names = overrideRoutes!.map(
-        (e) => e.name,
-      );
-      routes.removeWhere(
-        (element) {
-          final name = element.name;
-          if (name != null) {
-            return names.contains(name);
-          }
-          return false;
-        },
-      );
-      routes.addAll(overrideRoutes);
-    }
-
     final initialLocation = routes
         .firstWhere(
           (element) => element.name == _initialRouteName,
           orElse: () => routes.first,
         )
         .path;
-
-    _router = GoRouter(
+    _router = _router = GoRouter(
       initialLocation: initialLocation,
       routes: routes,
     );
@@ -133,15 +115,8 @@ mixin RouterMixin on State<MyApp> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPersistentFrameCallback((_) => _init);
     super.initState();
-    if (widget.initialRoute != null) {
-      _initialRouteName = widget.initialRoute!;
-      _loading = false;
-    } else {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _init(),
-      );
-    }
   }
 
   Future<void> _init() async {

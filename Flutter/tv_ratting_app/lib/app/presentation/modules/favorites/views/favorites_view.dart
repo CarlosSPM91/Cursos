@@ -12,7 +12,8 @@ class FavoritesView extends StatefulWidget {
   State<FavoritesView> createState() => _FavoritesViewState();
 }
 
-class _FavoritesViewState extends State<FavoritesView> with SingleTickerProviderStateMixin {
+class _FavoritesViewState extends State<FavoritesView>
+    with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
@@ -32,13 +33,17 @@ class _FavoritesViewState extends State<FavoritesView> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    final FavoritesController controller = context.read();
+    final FavoritesController controller = context.watch();
     return Scaffold(
-      appBar: FavoritesAppBar(tabController: _tabController),
+      appBar: FavoritesAppBar(
+        tabController: _tabController,
+      ),
       body: controller.state.map(
-        loading: (_) => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: (_) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
         failed: (_) => RequestFailed(
           onRetry: () => controller.init(),
         ),
