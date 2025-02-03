@@ -47,4 +47,4 @@ app.*.map.json
 lib/app/generated/
 lib/app/domain/api_key.dart
 coverage/
-
+genhtml.perl
