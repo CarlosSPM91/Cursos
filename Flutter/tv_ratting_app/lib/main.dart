@@ -18,6 +18,7 @@ import 'package:tv_ratting_app/app/presentation/global/controller/favorites/favo
 import 'package:tv_ratting_app/app/presentation/global/controller/favorites/state/favorites_state.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
+import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
@@ -44,7 +45,22 @@ void main() async {
     internetChecker: InternetChecker(),
   );
   runApp(
-    MultiProvider(
+    const RootWidget(),
+  );
+}
+
+class RootWidget extends StatelessWidget {
+  final String initialRoute;
+  final Map<String, WidgetBuilder>? appRoutes;
+  const RootWidget({
+    super.key,
+    this.initialRoute = Routes.splash,
+    this.appRoutes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeController>(
           create: (context) {
@@ -68,9 +84,11 @@ void main() async {
         ),
       ],
       child: TranslationProvider(
-        child: const MyApp(),
+        child: MyApp(
+          initialRoute: initialRoute,
+          appRoutes: appRoutes,
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
-

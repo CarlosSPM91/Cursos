@@ -7,11 +7,14 @@ import 'package:tv_ratting_app/app/inject_repositories.dart';
 import 'package:tv_ratting_app/app/presentation/app_routes.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/theme.dart';
-import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 
 class MyApp extends StatefulWidget {
+  final String initialRoute;
+  final Map<String, WidgetBuilder>? appRoutes;
   const MyApp({
     super.key,
+    required this.initialRoute,
+    this.appRoutes,
   });
 
   @override
@@ -51,8 +54,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: MaterialApp(
-        initialRoute: Routes.splash,
-        routes: appRoutes,
+        initialRoute: widget.initialRoute,
+        routes: widget.appRoutes ?? appRoutes,
         theme: getTheme(themeController.darkMode),
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
