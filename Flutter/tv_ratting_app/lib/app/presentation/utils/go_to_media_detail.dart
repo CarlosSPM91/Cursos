@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tv_ratting_app/app/domain/model/media/media.dart';
-import 'package:tv_ratting_app/app/presentation/modules/movie/views/movie_view.dart';
-import 'package:tv_ratting_app/app/presentation/modules/serie/views/serie_view.dart';
+import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 
-Future<void> goToMediaDetails(BuildContext context, Media media) async {
+void goToMediaDetails(
+  BuildContext context,
+  Media media,
+) async {
   if (media.type == MediaType.movie) {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => MovieView(
-          movieId: media.id,
-        ),
-      ),
+    context.pushNamed(
+      Routes.movie,
+      pathParameters: {"id": "${media.id}"},
     );
   } else {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => SerieView(serieId: media.id),
-      ),
+    context.pushNamed(
+      Routes.serie,
+      pathParameters: {"id": "${media.id}"},
     );
   }
 }

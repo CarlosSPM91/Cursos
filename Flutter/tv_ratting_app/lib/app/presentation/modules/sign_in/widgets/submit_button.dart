@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/generated/translations.g.dart';
 import 'package:tv_ratting_app/app/presentation/modules/sign_in/views/controller/sign_in_cotroller.dart';
@@ -46,7 +47,9 @@ class SubmitButton extends StatelessWidget {
           SnackBar(content: Text(message)),
         );
       },
-      right: (user) => Navigator.of(context).pushReplacementNamed(Routes.home),
+      right: (user) => context.goNamed(
+        Routes.home,
+      ),
     );
   }
 }

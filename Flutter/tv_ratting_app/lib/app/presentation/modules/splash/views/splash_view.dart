@@ -1,77 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_ratting_app/app/inject_repositories.dart';
-import 'package:tv_ratting_app/app/presentation/global/controller/favorites/favorites_controller.dart';
-import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
-import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
+import 'package:tv_ratting_app/app/presentation/global/colors.dart';
+import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
 
-class SplashView extends StatefulWidget {
+class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
   @override
-  State<SplashView> createState() => _SplashViewState();
-}
-
-
-class _SplashViewState extends State<SplashView> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        _init();
-      },
-    );
-  }
-
-  Future<void> _init() async {
-    final routeName = await () async {
-      final SessionController sessionController = context.read();
-      final FavoritesController favoritesController = context.read();
-
-      final hasInternet =  Repositories.connectivity.hasInternet;
-
-      if (!hasInternet) {
-        return Routes.offline;
-      }
-
-      final isSignedIn = await Repositories.authentication.isSignedIn;
-
-      if (!isSignedIn) {
-        return Routes.signIn;
-      }
-
-      final user = await Repositories.account.getUserData();
-
-      if (user != null) {
-        sessionController.setUser(user);
-        favoritesController.init();
-        return Routes.home;
-      }
-
-      return Routes.signIn;
-    }();
-
-    if (mounted) {
-      _goTo(routeName);
-    }
-  }
-
-  void _goTo(String routeName) {
-    Navigator.pushReplacementNamed(
-      context,
-      routeName,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: 80,
-          height: 80,
-          child: CircularProgressIndicator(),
+    final ThemeController themeController = context.read();
+    final darkMode = themeController.darkMode;
+
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Material(
+        color: darkMode ? AppColors.dark : Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                width: 80,
+                height: 80,
+                child: CircularProgressIndicator(),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'LOADING...',
+                style: TextStyle(
+                  color: darkMode ? Colors.white : AppColors.dark,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

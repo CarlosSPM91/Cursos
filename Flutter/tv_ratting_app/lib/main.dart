@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -51,11 +52,11 @@ void main() async {
 
 class RootWidget extends StatelessWidget {
   final String initialRoute;
-  final Map<String, WidgetBuilder>? appRoutes;
+  final List<GoRoute>? overrideRoutes;
   const RootWidget({
     super.key,
     this.initialRoute = Routes.splash,
-    this.appRoutes,
+    this.overrideRoutes,
   });
 
   @override
@@ -86,7 +87,7 @@ class RootWidget extends StatelessWidget {
       child: TranslationProvider(
         child: MyApp(
           initialRoute: initialRoute,
-          appRoutes: appRoutes,
+          overrideRoutes: overrideRoutes,
         ),
       ),
     );

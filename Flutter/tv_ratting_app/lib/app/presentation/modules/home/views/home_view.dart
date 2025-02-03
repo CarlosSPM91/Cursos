@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/inject_repositories.dart';
 import 'package:tv_ratting_app/app/presentation/global/widgets/my_scaffold.dart';
@@ -29,8 +30,7 @@ class _HomeViewState extends State<HomeView> {
         appBar: AppBar(
           actions: [
             IconButton(
-              onPressed: () => Navigator.pushNamed(
-                context,
+              onPressed: () => context.pushNamed(
                 Routes.favorites,
               ),
               icon: const Icon(
@@ -39,7 +39,9 @@ class _HomeViewState extends State<HomeView> {
             ),
             IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(Routes.profile);
+                context.pushNamed(
+                  Routes.profile,
+                );
               },
               icon: const Icon(
                 Icons.person,

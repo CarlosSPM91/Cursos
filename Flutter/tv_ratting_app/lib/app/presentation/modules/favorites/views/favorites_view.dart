@@ -32,7 +32,7 @@ class _FavoritesViewState extends State<FavoritesView> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    final FavoritesController controller = context.watch();
+    final FavoritesController controller = context.read();
     return Scaffold(
       appBar: FavoritesAppBar(tabController: _tabController),
       body: controller.state.map(

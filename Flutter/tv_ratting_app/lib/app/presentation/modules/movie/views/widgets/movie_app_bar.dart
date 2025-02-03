@@ -25,6 +25,7 @@ class MovieAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Colors.red,
             ),
             loaded: (favoriteState) => IconButton(
+              key: const Key('favorite-button'),
               onPressed: () => markAsFavorite(
                 context: context,
                 media: movieState.movie.toMedia(),

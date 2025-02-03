@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/generated/translations.g.dart';
 import 'package:tv_ratting_app/app/inject_repositories.dart';
-import 'package:tv_ratting_app/app/presentation/app_routes.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/theme.dart';
+import 'package:tv_ratting_app/app/presentation/modules/splash/views/splash_view.dart';
+import 'package:tv_ratting_app/app/presentation/routes/router.dart';
 
 class MyApp extends StatefulWidget {
-  final String initialRoute;
-  final Map<String, WidgetBuilder>? appRoutes;
+  final String? initialRoute;
+  final List<GoRoute>? overrideRoutes;
   const MyApp({
     super.key,
     required this.initialRoute,
-    this.appRoutes,
+    this.overrideRoutes,
   });
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver, RouterMixin {
   @override
   void initState() {
     super.initState();
@@ -49,14 +51,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = context.watch();
+    if (loading) {
+      return const SplashView();
+    }
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
-      child: MaterialApp(
-        initialRoute: widget.initialRoute,
-        routes: widget.appRoutes ?? appRoutes,
+      child: MaterialApp.router(
         theme: getTheme(themeController.darkMode),
+        routerConfig: router,
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

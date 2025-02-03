@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tv_ratting_app/app/inject_repositories.dart';
-import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
+import 'package:tv_ratting_app/app/presentation/routes/router.dart';
 
 class OfflineView extends StatefulWidget {
   const OfflineView({super.key});
@@ -18,9 +19,12 @@ class _OfflineViewState extends State<OfflineView> {
   void initState() {
     super.initState();
     _subscription = Repositories.connectivity.onInternetChanged.listen(
-      (connected) {
+      (connected) async {
         if (connected) {
-          Navigator.of(context).pushReplacementNamed(Routes.splash);
+          final initialRouteName = await getInitialRouteName(context);
+          if (mounted) {
+            context.goNamed(initialRouteName);
+          }
         }
       },
     );

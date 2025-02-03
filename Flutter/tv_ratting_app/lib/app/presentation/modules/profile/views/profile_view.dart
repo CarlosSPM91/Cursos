@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
@@ -27,9 +28,8 @@ class ProfileView extends StatelessWidget {
               ListTile(
                 onTap: () {
                   context.read<SessionController>().signOut();
-                  Navigator.of(context).pushNamedAndRemoveUntil(
+                  context.goNamed(
                     Routes.signIn,
-                    (_) => false,
                   );
                 },
                 title: const Text("Sign out"),
