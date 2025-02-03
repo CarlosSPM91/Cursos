@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -45,19 +46,19 @@ void main() async {
       internetChecker: InternetChecker(),
     );
 
-    runApp(const RootWidget());
+    runApp(const Root());
   } catch (e, stackTrace) {
     debugPrint("Error en main: $e\n$stackTrace");
   }
 }
 
-class RootWidget extends StatelessWidget {
+class Root extends StatelessWidget {
   final String? initialRoute;
-  final Map<String, WidgetBuilder>? appRoutes;
-  const RootWidget({
+  final List<GoRoute>? overrideRoutes;
+  const Root({
     super.key,
     this.initialRoute,
-    this.appRoutes,
+    this.overrideRoutes,
   });
 
   @override
@@ -88,7 +89,7 @@ class RootWidget extends StatelessWidget {
       child: TranslationProvider(
         child: MyApp(
           initialRoute: initialRoute,
-          appRoutes: appRoutes,
+          overrideRoutes: overrideRoutes,
         ),
       ),
     );
