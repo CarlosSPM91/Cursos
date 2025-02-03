@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tv_ratting_app/app/data/http/http.dart';
@@ -37,76 +38,81 @@ Future<void> injectRepositories({
   required Connectivity connectivity,
   required InternetChecker internetChecker,
 }) async {
-  final sessionService = SessionService(secureStorage);
-  final languageService = LanguageService(languageCode);
-  final accountAPI = AccountApi(
-    http,
-    sessionService,
-    languageService,
-  );
-  final authenticationApi = AutenthicationAPI(http);
-
-  ServiceLocator.instance.put<AccountRepository>(
-    AccountRepositoryImpl(
-      accountAPI,
+  try {
+    final sessionService = SessionService(secureStorage);
+    final languageService = LanguageService(languageCode);
+    final accountAPI = AccountApi(
+      http,
       sessionService,
-    ),
-  );
+      languageService,
+    );
+    final authenticationApi = AutenthicationAPI(http);
 
-  ServiceLocator.instance.put<PreferencesRepository>(
-    PreferenceRepositoryImpl(
-      preferences,
-      systemDarkMode,
-    ),
-  );
-
-  ServiceLocator.instance.put<LanguageRepository>(
-    LanguageRepositoryImpl(languageService),
-  );
-
-  final connectivityRepository = ServiceLocator.instance.put<ConnectivityRepository>(
-    ConnectivityRepositoryImpl(
-      connectivity,
-      internetChecker,
-    ),
-  );
-
-  ServiceLocator.instance.put<AuthenticationRepository>(
-    AuthenticationRepositoryImpl(
-      sessionService,
-      authenticationApi,
-      accountAPI,
-    ),
-  );
-
-  ServiceLocator.instance.put<TrendingRepository>(
-    TrendingRepositoryImpl(
-      TrendingApi(
-        http,
-        languageService,
+    ServiceLocator.instance.put<AccountRepository>(
+      AccountRepositoryImpl(
+        accountAPI,
+        sessionService,
       ),
-    ),
-  );
+    );
 
-  ServiceLocator.instance.put<MoviesRepository>(
-    MoviesRepositoryImpl(
-      moviesApi: MoviesApi(
-        http,
-        languageService,
+    ServiceLocator.instance.put<PreferencesRepository>(
+      PreferenceRepositoryImpl(
+        preferences,
+        systemDarkMode,
       ),
-    ),
-  );
+    );
 
-  ServiceLocator.instance.put<SeriesRepository>(
-    SeriesRepositoryImpl(
-      seriesApi: SeriesApi(
-        http,
-        languageService,
+    ServiceLocator.instance.put<LanguageRepository>(
+      LanguageRepositoryImpl(languageService),
+    );
+
+    final connectivityRepository = ServiceLocator.instance.put<ConnectivityRepository>(
+      ConnectivityRepositoryImpl(
+        connectivity,
+        internetChecker,
       ),
-    ),
-  );
+    );
 
-  await connectivityRepository.initialize();
+    ServiceLocator.instance.put<AuthenticationRepository>(
+      AuthenticationRepositoryImpl(
+        sessionService,
+        authenticationApi,
+        accountAPI,
+      ),
+    );
+
+    ServiceLocator.instance.put<TrendingRepository>(
+      TrendingRepositoryImpl(
+        TrendingApi(
+          http,
+          languageService,
+        ),
+      ),
+    );
+
+    ServiceLocator.instance.put<MoviesRepository>(
+      MoviesRepositoryImpl(
+        moviesApi: MoviesApi(
+          http,
+          languageService,
+        ),
+      ),
+    );
+
+    ServiceLocator.instance.put<SeriesRepository>(
+      SeriesRepositoryImpl(
+        seriesApi: SeriesApi(
+          http,
+          languageService,
+        ),
+      ),
+    );
+
+    await connectivityRepository.initialize();
+  } catch (e, stackTrace) {
+    debugPrint("Error injecting repositories: $e\n$stackTrace");
+    rethrow; // Or handle the error appropriately
+  }
 }
 
 class Repositories {

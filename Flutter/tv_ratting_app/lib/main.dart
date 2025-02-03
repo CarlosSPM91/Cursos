@@ -18,43 +18,45 @@ import 'package:tv_ratting_app/app/presentation/global/controller/favorites/favo
 import 'package:tv_ratting_app/app/presentation/global/controller/favorites/state/favorites_state.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/session_controller.dart';
 import 'package:tv_ratting_app/app/presentation/global/controller/theme_controller.dart';
-import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
-  setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-  LocaleSettings.useDeviceLocale();
-  Intl.defaultLocale = LocaleSettings.currentLocale.languageCode;
+  try {
+    setPathUrlStrategy();
+    LocaleSettings.useDeviceLocale();
+    Intl.defaultLocale = LocaleSettings.currentLocale.languageCode;
 
-  final http = Http(
-    baseURL: ApiKey.baseURL,
-    apiKey: ApiKey.apiKey,
-    client: Client(),
-  );
+    final http = Http(
+      baseURL: ApiKey.baseURL,
+      apiKey: ApiKey.apiKey,
+      client: Client(),
+    );
 
-  final sysDarkMode = ui.PlatformDispatcher.instance.platformBrightness == Brightness.dark;
+    final sysDarkMode = ui.PlatformDispatcher.instance.platformBrightness == Brightness.dark;
 
-  await injectRepositories(
-    systemDarkMode: sysDarkMode,
-    http: http,
-    secureStorage: const FlutterSecureStorage(),
-    languageCode: LocaleSettings.currentLocale.languageCode,
-    preferences: await SharedPreferences.getInstance(),
-    connectivity: Connectivity(),
-    internetChecker: InternetChecker(),
-  );
-  runApp(
-    const RootWidget(),
-  );
+    await injectRepositories(
+      systemDarkMode: sysDarkMode,
+      http: http,
+      secureStorage: const FlutterSecureStorage(),
+      languageCode: LocaleSettings.currentLocale.languageCode,
+      preferences: await SharedPreferences.getInstance(),
+      connectivity: Connectivity(),
+      internetChecker: InternetChecker(),
+    );
+
+    runApp(const RootWidget());
+  } catch (e, stackTrace) {
+    debugPrint("Error en main: $e\n$stackTrace");
+  }
 }
 
 class RootWidget extends StatelessWidget {
-  final String initialRoute;
+  final String? initialRoute;
   final Map<String, WidgetBuilder>? appRoutes;
   const RootWidget({
     super.key,
-    this.initialRoute = Routes.splash,
+    this.initialRoute,
     this.appRoutes,
   });
 

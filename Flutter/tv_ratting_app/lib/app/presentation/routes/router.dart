@@ -16,30 +16,36 @@ import 'package:tv_ratting_app/app/presentation/modules/splash/views/splash_view
 import 'package:tv_ratting_app/app/presentation/routes/routes.dart';
 
 Future<String> getInitialRouteName(BuildContext context) async {
-  final SessionController sessionController = context.read();
-  final FavoritesController favoritesController = context.read();
+  try {
+    final SessionController sessionController = context.read();
+    final FavoritesController favoritesController = context.read();
 
-  final hasInternet = Repositories.connectivity.hasInternet;
+    final hasInternet = Repositories.connectivity.hasInternet;
 
-  if (!hasInternet) {
+    if (!hasInternet) {
+      return Routes.offline;
+    }
+
+    final isSignedIn = await Repositories.authentication.isSignedIn;
+
+    if (!isSignedIn) {
+      return Routes.signIn;
+    }
+
+    final user = await Repositories.account.getUserData();
+
+    if (user != null) {
+      sessionController.setUser(user);
+      favoritesController.init();
+      return Routes.home;
+    }
+
+    return Routes.signIn;
+  } catch (e) {
+    // Log the error and return a fallback route
+    debugPrint("Error determining initial route: $e");
     return Routes.offline;
   }
-
-  final isSignedIn = await Repositories.authentication.isSignedIn;
-
-  if (!isSignedIn) {
-    return Routes.signIn;
-  }
-
-  final user = await Repositories.account.getUserData();
-
-  if (user != null) {
-    sessionController.setUser(user);
-    favoritesController.init();
-    return Routes.home;
-  }
-
-  return Routes.signIn;
 }
 
 mixin RouterMixin on State<MyApp> {
@@ -106,7 +112,7 @@ mixin RouterMixin on State<MyApp> {
           orElse: () => routes.first,
         )
         .path;
-    _router = _router = GoRouter(
+    _router = GoRouter(
       initialLocation: initialLocation,
       routes: routes,
     );
