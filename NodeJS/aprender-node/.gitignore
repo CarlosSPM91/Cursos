@@ -1,0 +1,24 @@
+# Ignorar node_modules
+node_modules/
+
+# Ignorar logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ignorar entorno local
+.env
+
+# Ignorar directorios de dependencias locales
+.bower_components/
+
+# Ignorar cobertura de pruebas
+coverage/
+
+# Ignorar carpeta de compilación (si la hay)
+dist/
+
+# Ignorar archivos de sistema
+.DS_Store
+Thumbs.db
