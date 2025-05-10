@@ -1,9 +1,10 @@
 //importar dependencias
+const connection = require("./database/connection");
 const express = require("express");
 const cors = require("cors");
 
 //conexión a la base de datos
-
+connection();
 
 //Crear server
 const app = express();
@@ -17,6 +18,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Cargar rutas
+const projectRoutes = require("./routes/project");
+
+app.use('/api/project', projectRoutes);
+
 //Crear endpoints
 app.get("/", (req, res) => {
     console.log("Ruta Raiz ejecutada");
